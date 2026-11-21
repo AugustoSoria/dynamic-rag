@@ -1,7 +1,7 @@
 import re
 from dataclasses import dataclass
 
-import fitz  # pymupdf
+import pymupdf
 
 
 class PdfError(Exception):
@@ -25,7 +25,7 @@ def _clean(text: str) -> str:
 def extract_pages(data: bytes, max_pages: int | None = None) -> list[Page]:
     """Extrae el texto de cada página. Lanza PdfError si el PDF no es utilizable."""
     try:
-        doc = fitz.open(stream=data, filetype="pdf")
+        doc = pymupdf.open(stream=data, filetype="pdf")
     except Exception as exc:
         raise PdfError("El archivo no es un PDF válido.") from exc
 

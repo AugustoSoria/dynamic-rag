@@ -1,7 +1,7 @@
 import os
 import uuid
 
-import fitz
+import pymupdf
 import pytest
 from fastapi.testclient import TestClient
 
@@ -33,11 +33,11 @@ def session_headers():
 
 
 def make_pdf(pages_text: list[str]) -> bytes:
-    doc = fitz.open()
+    doc = pymupdf.open()
     for text in pages_text:
         page = doc.new_page()
         if text:
-            page.insert_textbox(fitz.Rect(50, 50, 550, 800), text)
+            page.insert_textbox(pymupdf.Rect(50, 50, 550, 800), text)
     data = doc.tobytes()
     doc.close()
     return data
