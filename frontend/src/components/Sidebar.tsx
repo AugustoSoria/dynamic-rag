@@ -1,18 +1,24 @@
 import { FileSearch, RotateCcw, X } from "lucide-react";
 
+import type { DocumentInfo } from "../api/types";
 import type { useDocuments } from "../hooks/useDocuments";
 import { DocumentList } from "./DocumentList";
 import { UploadZone } from "./UploadZone";
 
 interface Props {
   docs: ReturnType<typeof useDocuments>;
+  openDocId?: string;
+  onOpenDocument: (doc: DocumentInfo) => void;
   onNewSession: () => void;
   onClose: () => void;
 }
 
-export function Sidebar({ docs, onNewSession, onClose }: Props) {
+export function Sidebar({ docs, openDocId, onOpenDocument, onNewSession, onClose }: Props) {
   const handleNewSession = () => {
-    if (docs.documents.length === 0 || confirm("¿Empezar una sesión nueva? Vas a dejar de ver los documentos actuales.")) {
+    if (
+      docs.documents.length === 0 ||
+      confirm("¿Empezar una sesión nueva? Vas a dejar de ver los documentos actuales.")
+    ) {
       onNewSession();
     }
   };
@@ -47,6 +53,8 @@ export function Sidebar({ docs, onNewSession, onClose }: Props) {
           selectedIds={docs.selectedIds}
           onToggle={docs.toggleSelected}
           onDelete={docs.removeDocument}
+          openDocId={openDocId}
+          onOpen={onOpenDocument}
         />
       </div>
 

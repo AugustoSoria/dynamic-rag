@@ -52,6 +52,14 @@ body {
   @apply border border-slate-200 px-2 py-1 text-left;
 }
 
+/* Resaltado del fragmento citado en el visor de PDF (la capa de texto es transparente sobre el canvas) */
+.react-pdf__Page__textContent mark {
+  background-color: rgb(250 204 21 / 0.45);
+  color: transparent;
+  border-radius: 2px;
+  padding: 0;
+}
+
 /* Cursor parpadeante mientras llega la respuesta */
 .streaming-cursor::after {
   content: "▍";

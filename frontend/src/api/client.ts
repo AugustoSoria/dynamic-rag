@@ -39,8 +39,11 @@ export async function deleteDocument(sessionId: string, docId: string): Promise<
   if (!res.ok && res.status !== 404) throw await errorFromResponse(res);
 }
 
-export function documentFileUrl(docId: string): string {
-  return `${API_URL}/api/documents/${docId}/file`;
+/** Descarga el PDF como Blob (el endpoint requiere el header de sesión, así que no alcanza con una URL). */
+export async function fetchDocumentFile(sessionId: string, docId: string): Promise<Blob> {
+  const res = await fetch(`${API_URL}/api/documents/${docId}/file`, { headers: headers(sessionId) });
+  if (!res.ok) throw await errorFromResponse(res);
+  return res.blob();
 }
 
 /**

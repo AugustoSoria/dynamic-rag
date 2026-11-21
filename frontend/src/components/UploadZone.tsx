@@ -34,9 +34,7 @@ export function UploadZone({ status, onFile, onDismissError }: Props) {
           />
         </div>
         <p className="mt-2 text-xs text-indigo-700">
-          {uploading
-            ? `Subiendo… ${Math.round(status.progress * 100)}%`
-            : "Extrayendo texto y generando embeddings…"}
+          {uploading ? `Subiendo… ${Math.round(status.progress * 100)}%` : "Extrayendo texto y generando embeddings…"}
         </p>
       </div>
     );
@@ -58,9 +56,7 @@ export function UploadZone({ status, onFile, onDismissError }: Props) {
           handleFiles(e.dataTransfer.files);
         }}
         className={`flex w-full flex-col items-center rounded-xl border-2 border-dashed px-4 py-6 text-center transition ${
-          dragging
-            ? "border-indigo-500 bg-indigo-50"
-            : "border-slate-300 hover:border-indigo-400 hover:bg-slate-50"
+          dragging ? "border-indigo-500 bg-indigo-50" : "border-slate-300 hover:border-indigo-400 hover:bg-slate-50"
         }`}
       >
         <Upload className={`size-6 ${dragging ? "text-indigo-600" : "text-slate-400"}`} />

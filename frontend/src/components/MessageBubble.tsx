@@ -1,5 +1,6 @@
 import { AlertCircle, Sparkles } from "lucide-react";
 
+import type { Source } from "../api/types";
 import type { ChatMessage } from "../hooks/useChat";
 import { Markdown } from "./Markdown";
 import { SourceList } from "./SourceList";
@@ -7,9 +8,10 @@ import { SourceList } from "./SourceList";
 interface Props {
   message: ChatMessage;
   question: string; // la pregunta del usuario que originó esta respuesta
+  onOpenSource: (source: Source) => void;
 }
 
-export function MessageBubble({ message, question }: Props) {
+export function MessageBubble({ message, question, onOpenSource }: Props) {
   if (message.role === "user") {
     return (
       <div className="flex justify-end">
@@ -32,7 +34,14 @@ export function MessageBubble({ message, question }: Props) {
         {thinking ? (
           <ThinkingIndicator hasSources={!!message.sources} />
         ) : (
-          message.content && <Markdown content={message.content} sources={message.sources} streaming={streaming} />
+          message.content && (
+            <Markdown
+              content={message.content}
+              sources={message.sources}
+              streaming={streaming}
+              onOpenSource={onOpenSource}
+            />
+          )
         )}
 
         {message.status === "stopped" && <p className="mt-2 text-xs text-slate-400 italic">Respuesta detenida.</p>}
@@ -45,7 +54,12 @@ export function MessageBubble({ message, question }: Props) {
         )}
 
         {!streaming && message.sources && (
-          <SourceList sources={message.sources} searchQuery={message.searchQuery} question={question} />
+          <SourceList
+            sources={message.sources}
+            searchQuery={message.searchQuery}
+            question={question}
+            onOpenSource={onOpenSource}
+          />
         )}
       </div>
     </div>

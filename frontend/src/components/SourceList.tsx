@@ -7,9 +7,10 @@ interface Props {
   sources: Source[];
   searchQuery?: string;
   question: string;
+  onOpenSource: (source: Source) => void;
 }
 
-export function SourceList({ sources, searchQuery, question }: Props) {
+export function SourceList({ sources, searchQuery, question, onOpenSource }: Props) {
   const [open, setOpen] = useState(false);
   if (sources.length === 0) return null;
 
@@ -33,7 +34,13 @@ export function SourceList({ sources, searchQuery, question }: Props) {
             </p>
           )}
           {sources.map((s) => (
-            <div key={s.index} className="rounded-lg border border-slate-200 bg-slate-50 p-2.5">
+            <button
+              key={s.index}
+              type="button"
+              onClick={() => onOpenSource(s)}
+              title="Ver en el documento"
+              className="block w-full rounded-lg border border-slate-200 bg-slate-50 p-2.5 text-left transition hover:border-indigo-300 hover:bg-indigo-50/50"
+            >
               <div className="flex items-center gap-2 text-xs">
                 <span className="flex size-[18px] items-center justify-center rounded-md bg-indigo-100 font-semibold text-indigo-700">
                   {s.index}
@@ -46,7 +53,7 @@ export function SourceList({ sources, searchQuery, question }: Props) {
                 </span>
               </div>
               <p className="mt-1.5 line-clamp-3 text-xs whitespace-pre-line text-slate-600">{s.text}</p>
-            </div>
+            </button>
           ))}
         </div>
       )}

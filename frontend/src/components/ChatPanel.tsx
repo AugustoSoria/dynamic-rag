@@ -1,6 +1,7 @@
 import { FileUp, MessageSquareText, Trash2 } from "lucide-react";
 import { useLayoutEffect, useRef } from "react";
 
+import type { Source } from "../api/types";
 import type { useChat } from "../hooks/useChat";
 import { ChatInput } from "./ChatInput";
 import { MessageBubble } from "./MessageBubble";
@@ -10,11 +11,12 @@ interface Props {
   hasDocuments: boolean;
   scopeLabel: string;
   onOpenDocuments: () => void;
+  onOpenSource: (source: Source) => void;
 }
 
 const EXAMPLE_QUESTIONS = ["¿Cuáles son los puntos principales?", "¿Qué fechas importantes se mencionan?"];
 
-export function ChatPanel({ chat, hasDocuments, scopeLabel, onOpenDocuments }: Props) {
+export function ChatPanel({ chat, hasDocuments, scopeLabel, onOpenDocuments, onOpenSource }: Props) {
   const { messages, isStreaming, send, stop, clear } = chat;
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -48,7 +50,12 @@ export function ChatPanel({ chat, hasDocuments, scopeLabel, onOpenDocuments }: P
             <EmptyState hasDocuments={hasDocuments} onAsk={send} onOpenDocuments={onOpenDocuments} />
           ) : (
             messages.map((m, i) => (
-              <MessageBubble key={m.id} message={m} question={messages[i - 1]?.content ?? ""} />
+              <MessageBubble
+                key={m.id}
+                message={m}
+                question={messages[i - 1]?.content ?? ""}
+                onOpenSource={onOpenSource}
+              />
             ))
           )}
         </div>

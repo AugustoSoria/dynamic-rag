@@ -9,9 +9,11 @@ interface Props {
   selectedIds: string[];
   onToggle: (docId: string) => void;
   onDelete: (docId: string) => Promise<void>;
+  openDocId?: string;
+  onOpen: (doc: DocumentInfo) => void;
 }
 
-export function DocumentList({ documents, loading, selectedIds, onToggle, onDelete }: Props) {
+export function DocumentList({ documents, loading, selectedIds, onToggle, onDelete, openDocId, onOpen }: Props) {
   const [deleting, setDeleting] = useState<string | null>(null);
 
   if (loading) {
@@ -68,15 +70,27 @@ export function DocumentList({ documents, loading, selectedIds, onToggle, onDele
                   aria-label={`Buscar solo en ${doc.filename}`}
                 />
               )}
-              <FileText className="size-5 shrink-0 text-red-500" />
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium text-slate-800" title={doc.filename}>
-                  {doc.filename}
-                </p>
-                <p className="text-xs text-slate-500">
-                  {doc.num_pages} {doc.num_pages === 1 ? "página" : "páginas"} · {doc.num_chunks} {doc.num_chunks === 1 ? "fragmento" : "fragmentos"}
-                </p>
-              </div>
+              <button
+                type="button"
+                onClick={() => onOpen(doc)}
+                title={`Ver ${doc.filename}`}
+                className="flex min-w-0 flex-1 items-center gap-3 text-left"
+              >
+                <FileText className="size-5 shrink-0 text-red-500" />
+                <div className="min-w-0 flex-1">
+                  <p
+                    className={`truncate text-sm font-medium ${
+                      openDocId === doc.doc_id ? "text-indigo-700" : "text-slate-800 hover:text-indigo-700"
+                    }`}
+                  >
+                    {doc.filename}
+                  </p>
+                  <p className="text-xs text-slate-500">
+                    {doc.num_pages} {doc.num_pages === 1 ? "página" : "páginas"} · {doc.num_chunks}{" "}
+                    {doc.num_chunks === 1 ? "fragmento" : "fragmentos"}
+                  </p>
+                </div>
+              </button>
               <button
                 onClick={() => handleDelete(doc)}
                 disabled={deleting === doc.doc_id}
