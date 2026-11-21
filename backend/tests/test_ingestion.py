@@ -1,19 +1,8 @@
-import fitz
 import pytest
 
 from app.services.chunker import chunk_pages, split_text
 from app.services.pdf_parser import Page, PdfError, extract_pages
-
-
-def make_pdf(pages_text: list[str]) -> bytes:
-    doc = fitz.open()
-    for text in pages_text:
-        page = doc.new_page()
-        if text:
-            page.insert_textbox(fitz.Rect(50, 50, 550, 800), text)
-    data = doc.tobytes()
-    doc.close()
-    return data
+from tests.conftest import make_pdf
 
 
 # --- chunker ---------------------------------------------------------------

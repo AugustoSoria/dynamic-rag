@@ -1,5 +1,6 @@
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -13,6 +14,10 @@ class Settings(BaseSettings):
     groq_api_key: str = ""
     groq_model: str = "openai/gpt-oss-20b"
     llm_temperature: float = 0.2
+    llm_reasoning_effort: Literal["low", "medium", "high"] = "medium"
+
+    # Memoria: cuántos mensajes previos se mandan al LLM
+    history_max_messages: int = 6
 
     # Embeddings
     embedding_model: str = "intfloat/multilingual-e5-small"
