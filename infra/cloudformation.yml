@@ -1,0 +1,287 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >-
+  Dynamic RAG - backend en una EC2 t3.small con Docker Compose (FastAPI + Caddy con HTTPS automatico).
+  La API key de Groq se lee de SSM Parameter Store (SecureString) al arrancar: nunca queda escrita en la plantilla.
+
+# Antes de crear el stack, crear el parametro con la API key (la plantilla no puede crear SecureStrings):
+#   Systems Manager -> Parameter Store -> Create parameter
+#   Nombre: /dynamic-rag/groq-api-key   Tipo: SecureString   Valor: la API key de Groq
+#
+# Al crear el stack hay que tildar "I acknowledge that AWS CloudFormation might create IAM resources"
+# (la instancia necesita un rol para leer ese parametro).
+
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label: { default: Aplicacion }
+        Parameters: [CorsOrigin, RepoUrl, RepoBranch, DomainName]
+      - Label: { default: Secretos }
+        Parameters: [GroqApiKeyParameterName]
+      - Label: { default: Costos }
+        Parameters: [AlertEmail, MonthlyBudgetUsd]
+      - Label: { default: Servidor }
+        Parameters: [InstanceType, VolumeSizeGiB, UbuntuAmiId]
+
+Parameters:
+  CorsOrigin:
+    Type: String
+    Description: URL del frontend en Vercel, sin barra final (p. ej. https://dynamic-rag.vercel.app).
+    AllowedPattern: ^https?://[^/\s]+$
+    ConstraintDescription: Debe ser una URL sin barra final, p. ej. https://dynamic-rag.vercel.app
+
+  RepoUrl:
+    Type: String
+    Description: Repositorio git con el codigo (tiene que ser publico).
+    Default: https://github.com/AugustoSoria/dynamic-rag.git
+
+  RepoBranch:
+    Type: String
+    Default: master
+
+  DomainName:
+    Type: String
+    Description: >-
+      Dominio propio del backend (opcional, su registro A debe apuntar a la Elastic IP).
+      Vacio = se usa <ip>.sslip.io, que no requiere registrar nada.
+    Default: ""
+
+  GroqApiKeyParameterName:
+    Type: String
+    Description: Nombre del parametro SecureString de SSM con la API key de Groq.
+    Default: /dynamic-rag/groq-api-key
+    AllowedPattern: ^/dynamic-rag/.+$
+    ConstraintDescription: Tiene que empezar con /dynamic-rag/ (el rol de la instancia solo puede leer esa ruta).
+
+  AlertEmail:
+    Type: String
+    Description: Email para la alerta de presupuesto.
+    AllowedPattern: ^[^@\s]+@[^@\s]+\.[^@\s]+$
+
+  MonthlyBudgetUsd:
+    Type: Number
+    Description: Avisa por email al superar el 80% de este monto (y al pronosticar que se va a superar).
+    Default: 25
+    MinValue: 1
+
+  InstanceType:
+    Type: String
+    Description: t3.small (2 GB) es el minimo comodo; con 1 GB el modelo de embeddings no entra holgado.
+    Default: t3.small
+    AllowedValues: [t3.small, t3.medium]
+
+  VolumeSizeGiB:
+    Type: Number
+    Description: La imagen de Docker ocupa ~3,5 GB y el build necesita espacio extra.
+    Default: 20
+    MinValue: 16
+
+  UbuntuAmiId:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Description: Parametro publico de Canonical con la ultima imagen de Ubuntu 24.04 (no hace falta cambiarlo).
+    Default: /aws/service/canonical/ubuntu/server/24.04/stable/current/amd64/hvm/ebs-gp3/ami-id
+
+Conditions:
+  UseSslip: !Equals [!Ref DomainName, ""]
+
+Resources:
+  # --- Red ---------------------------------------------------------------------------
+
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Dynamic RAG - HTTP y HTTPS publicos (sin SSH, se entra con Session Manager)
+      SecurityGroupIngress:
+        - { IpProtocol: tcp, FromPort: 80, ToPort: 80, CidrIp: 0.0.0.0/0, Description: "Caddy: desafio de Let's Encrypt y redireccion a HTTPS" }
+        - { IpProtocol: tcp, FromPort: 443, ToPort: 443, CidrIp: 0.0.0.0/0, Description: API por HTTPS }
+      Tags:
+        - { Key: Name, Value: dynamic-rag }
+
+  # IP fija: el dominio (y la URL que usa el frontend) salen de ella. Se libera al borrar el stack.
+  ElasticIp:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+      Tags:
+        - { Key: Name, Value: dynamic-rag }
+
+  ElasticIpAssociation:
+    Type: AWS::EC2::EIPAssociation
+    Properties:
+      AllocationId: !GetAtt ElasticIp.AllocationId
+      InstanceId: !Ref Instance
+
+  # --- Permisos de la instancia ----------------------------------------------------------
+
+  InstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal: { Service: ec2.amazonaws.com }
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        # Session Manager: terminal en el navegador sin abrir el puerto 22 ni manejar llaves.
+        - !Sub arn:${AWS::Partition}:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Policies:
+        - PolicyName: read-app-parameters
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action: ssm:GetParameter
+                Resource: !Sub arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter/dynamic-rag/*
+
+  InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles: [!Ref InstanceRole]
+
+  # Configuracion no secreta, en Parameter Store para poder cambiarla sin recrear la instancia:
+  # se actualiza el stack con otro CorsOrigin y se corre `sudo systemctl restart dynamic-rag`.
+  CorsOriginParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: /dynamic-rag/cors-origin
+      Type: String
+      Value: !Ref CorsOrigin
+
+  # --- Servidor ---------------------------------------------------------------------------
+
+  Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref UbuntuAmiId
+      InstanceType: !Ref InstanceType
+      IamInstanceProfile: !Ref InstanceProfile
+      SecurityGroupIds: [!GetAtt SecurityGroup.GroupId]
+      # "standard": si se agotan los creditos de CPU, la instancia se frena en vez de cobrar extra
+      # (el modo por defecto de las t3, "unlimited", factura el uso sostenido por encima del 20%).
+      CreditSpecification:
+        CPUCredits: standard
+      MetadataOptions:
+        HttpTokens: required # IMDSv2
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          Ebs:
+            VolumeType: gp3
+            VolumeSize: !Ref VolumeSizeGiB
+            Encrypted: true
+            DeleteOnTermination: true
+      Tags:
+        - { Key: Name, Value: dynamic-rag }
+      # Se ejecuta una sola vez, en el primer arranque. Log: /var/log/dynamic-rag-setup.log
+      UserData:
+        Fn::Base64: !Sub
+          - |
+            #!/bin/bash
+            set -euxo pipefail
+            exec > >(tee -a /var/log/dynamic-rag-setup.log) 2>&1
+
+            # Esperar a que se asocie la Elastic IP: al asociarse cambia la IP pública y se cortarían
+            # las descargas en curso (y Caddy pediría el certificado antes de que el dominio apunte acá).
+            imds() { curl -sf -H "X-aws-ec2-metadata-token: $(curl -sf -X PUT -H 'X-aws-ec2-metadata-token-ttl-seconds: 60' http://169.254.169.254/latest/api/token)" "http://169.254.169.254/latest/meta-data/$1"; }
+            for _ in $(seq 1 60); do
+              [ "$(imds public-ipv4 || true)" = "${ElasticIp.PublicIp}" ] && break
+              sleep 5
+            done
+
+            # En el primer arranque, las actualizaciones automáticas de Ubuntu pueden tener tomado apt.
+            echo 'DPkg::Lock::Timeout "600";' > /etc/apt/apt.conf.d/99lock-timeout
+            snap wait system seed.loaded
+
+            # Swap de 2 GB: margen para el build de la imagen (instalar PyTorch) con 2 GB de RAM.
+            if [ ! -f /swapfile ]; then
+              fallocate -l 2G /swapfile
+              chmod 600 /swapfile
+              mkswap /swapfile
+              swapon /swapfile
+              echo '/swapfile none swap sw 0 0' >> /etc/fstab
+            fi
+
+            curl -fsSL https://get.docker.com | sh
+            snap install aws-cli --classic
+
+            git clone --branch "${RepoBranch}" "${RepoUrl}" /opt/dynamic-rag
+
+            # Datos fijos de esta instancia (los secretos NO van aca).
+            cat > /etc/dynamic-rag.conf <<'CONF'
+            AWS_REGION=${AWS::Region}
+            DOMAIN=${Domain}
+            GROQ_PARAM=${GroqApiKeyParameterName}
+            CORS_PARAM=/dynamic-rag/cors-origin
+            CONF
+
+            # Genera los .env desde Parameter Store en cada arranque del servicio
+            # (cambiar la key o el CORS = actualizar el parametro y reiniciar el servicio).
+            cat > /usr/local/bin/dynamic-rag-env <<'SCRIPT'
+            #!/bin/bash
+            set -euo pipefail
+            source /etc/dynamic-rag.conf
+            get() { /snap/bin/aws ssm get-parameter --region "$AWS_REGION" --name "$1" --with-decryption --query Parameter.Value --output text; }
+            GROQ_API_KEY=$(get "$GROQ_PARAM")
+            CORS_ORIGIN=$(get "$CORS_PARAM")
+            umask 077
+            printf 'DOMAIN=%s\n' "$DOMAIN" > /opt/dynamic-rag/.env
+            printf 'GROQ_API_KEY=%s\nCORS_ORIGINS=["%s"]\n' "$GROQ_API_KEY" "$CORS_ORIGIN" > /opt/dynamic-rag/backend/.env
+            SCRIPT
+            chmod 755 /usr/local/bin/dynamic-rag-env
+
+            # Servicio: levanta la app al arrancar la instancia (y la reconstruye si cambio el codigo).
+            cat > /etc/systemd/system/dynamic-rag.service <<'UNIT'
+            [Unit]
+            Description=Dynamic RAG (docker compose)
+            Requires=docker.service
+            After=docker.service network-online.target
+            Wants=network-online.target
+
+            [Service]
+            Type=oneshot
+            RemainAfterExit=yes
+            WorkingDirectory=/opt/dynamic-rag
+            ExecStartPre=/usr/local/bin/dynamic-rag-env
+            ExecStart=/usr/bin/docker compose up -d --build --remove-orphans
+            ExecStop=/usr/bin/docker compose down
+            TimeoutStartSec=0
+
+            [Install]
+            WantedBy=multi-user.target
+            UNIT
+
+            systemctl daemon-reload
+            systemctl enable --now dynamic-rag
+            echo "Listo: https://${Domain}/api/health"
+          - Domain: !If [UseSslip, !Sub "${ElasticIp.PublicIp}.sslip.io", !Ref DomainName]
+
+  # --- Costos -----------------------------------------------------------------------------
+
+  Budget:
+    Type: AWS::Budgets::Budget
+    Properties:
+      Budget:
+        BudgetType: COST
+        TimeUnit: MONTHLY
+        BudgetLimit: { Amount: !Ref MonthlyBudgetUsd, Unit: USD }
+      NotificationsWithSubscribers:
+        - Notification: { NotificationType: ACTUAL, ComparisonOperator: GREATER_THAN, Threshold: 80 }
+          Subscribers: [{ SubscriptionType: EMAIL, Address: !Ref AlertEmail }]
+        - Notification: { NotificationType: FORECASTED, ComparisonOperator: GREATER_THAN, Threshold: 100 }
+          Subscribers: [{ SubscriptionType: EMAIL, Address: !Ref AlertEmail }]
+
+Outputs:
+  BackendUrl:
+    Description: URL del backend. Va en VITE_API_URL de Vercel.
+    Value: !Sub
+      - https://${Domain}
+      - Domain: !If [UseSslip, !Sub "${ElasticIp.PublicIp}.sslip.io", !Ref DomainName]
+  HealthCheck:
+    Description: Responde {"status":"ok"} cuando la app termino de levantar (5-10 min tras crear el stack).
+    Value: !Sub
+      - https://${Domain}/api/health
+      - Domain: !If [UseSslip, !Sub "${ElasticIp.PublicIp}.sslip.io", !Ref DomainName]
+  ElasticIp:
+    Value: !Ref ElasticIp
+  ConnectToInstance:
+    Description: Terminal en el navegador (Session Manager).
+    Value: !Sub https://${AWS::Region}.console.aws.amazon.com/systems-manager/session-manager/${Instance}?region=${AWS::Region}
