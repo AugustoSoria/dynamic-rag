@@ -1,15 +1,19 @@
 import { AlertCircle, Loader2, Upload, X } from "lucide-react";
 import { useRef, useState } from "react";
 
-import { MAX_UPLOAD_MB, type UploadStatus } from "../hooks/useDocuments";
+import type { UploadStatus } from "../hooks/useDocuments";
 
 interface Props {
   status: UploadStatus;
+  /** Tamaño máximo según el backend (undefined mientras carga la configuración). */
+  maxMb?: number;
+  /** Si hay un motivo, la zona se deshabilita y lo muestra (p. ej. límite de documentos alcanzado). */
+  disabledReason?: string;
   onFile: (file: File) => void;
   onDismissError: () => void;
 }
 
-export function UploadZone({ status, onFile, onDismissError }: Props) {
+export function UploadZone({ status, maxMb, disabledReason, onFile, onDismissError }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
   const busy = status.state === "uploading" || status.state === "processing";
@@ -44,24 +48,29 @@ export function UploadZone({ status, onFile, onDismissError }: Props) {
     <div>
       <button
         type="button"
+        disabled={!!disabledReason}
         onClick={() => inputRef.current?.click()}
         onDragOver={(e) => {
           e.preventDefault();
-          setDragging(true);
+          if (!disabledReason) setDragging(true);
         }}
         onDragLeave={() => setDragging(false)}
         onDrop={(e) => {
           e.preventDefault();
           setDragging(false);
-          handleFiles(e.dataTransfer.files);
+          if (!disabledReason) handleFiles(e.dataTransfer.files);
         }}
-        className={`flex w-full flex-col items-center rounded-xl border-2 border-dashed px-4 py-6 text-center transition ${
-          dragging ? "border-indigo-500 bg-indigo-50" : "border-slate-300 hover:border-indigo-400 hover:bg-slate-50"
+        className={`flex w-full flex-col items-center rounded-xl border-2 border-dashed px-4 py-6 text-center transition disabled:cursor-not-allowed disabled:opacity-60 ${
+          dragging
+            ? "border-indigo-500 bg-indigo-50"
+            : "border-slate-300 enabled:hover:border-indigo-400 enabled:hover:bg-slate-50"
         }`}
       >
         <Upload className={`size-6 ${dragging ? "text-indigo-600" : "text-slate-400"}`} />
-        <span className="mt-2 text-sm font-medium text-slate-700">Arrastrá un PDF o hacé clic</span>
-        <span className="mt-0.5 text-xs text-slate-500">Hasta {MAX_UPLOAD_MB} MB</span>
+        <span className="mt-2 text-sm font-medium text-slate-700">
+          {disabledReason ?? "Arrastrá un PDF o hacé clic"}
+        </span>
+        {!disabledReason && maxMb && <span className="mt-0.5 text-xs text-slate-500">Hasta {maxMb} MB</span>}
       </button>
       <input
         ref={inputRef}

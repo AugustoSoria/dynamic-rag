@@ -1,4 +1,4 @@
-import { FileText, Loader2, Trash2 } from "lucide-react";
+import { AlertCircle, FileText, Loader2, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 import type { DocumentInfo } from "../api/types";
@@ -6,6 +6,8 @@ import type { DocumentInfo } from "../api/types";
 interface Props {
   documents: DocumentInfo[];
   loading: boolean;
+  loadError: string | null;
+  onRetry: () => void;
   selectedIds: string[];
   onToggle: (docId: string) => void;
   onDelete: (docId: string) => Promise<void>;
@@ -13,13 +15,39 @@ interface Props {
   onOpen: (doc: DocumentInfo) => void;
 }
 
-export function DocumentList({ documents, loading, selectedIds, onToggle, onDelete, openDocId, onOpen }: Props) {
+export function DocumentList({
+  documents,
+  loading,
+  loadError,
+  onRetry,
+  selectedIds,
+  onToggle,
+  onDelete,
+  openDocId,
+  onOpen,
+}: Props) {
   const [deleting, setDeleting] = useState<string | null>(null);
 
   if (loading) {
     return (
       <div className="flex justify-center py-6 text-slate-400">
         <Loader2 className="size-5 animate-spin" />
+      </div>
+    );
+  }
+
+  // Sin esto, un backend caído se vería igual que "no subiste documentos".
+  if (loadError) {
+    return (
+      <div className="flex items-start gap-2 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+        <AlertCircle className="mt-0.5 size-4 shrink-0" />
+        <div>
+          <p>No se pudieron cargar tus documentos.</p>
+          <p className="text-xs text-red-600/80">{loadError}</p>
+          <button onClick={onRetry} className="mt-1.5 text-xs font-medium underline hover:text-red-900">
+            Reintentar
+          </button>
+        </div>
       </div>
     );
   }
@@ -56,6 +84,7 @@ export function DocumentList({ documents, loading, selectedIds, onToggle, onDele
           const selected = selectedIds.includes(doc.doc_id);
           return (
             <li
+              data-testid="document-item"
               key={doc.doc_id}
               className={`group flex items-center gap-3 rounded-lg border p-2.5 transition ${
                 selected ? "border-indigo-300 bg-indigo-50" : "border-slate-200 bg-white hover:border-slate-300"

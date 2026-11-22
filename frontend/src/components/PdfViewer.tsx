@@ -1,10 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { AlertCircle, ChevronLeft, ChevronRight, Loader2, X } from "lucide-react";
 import { Suspense, useCallback, useMemo, useRef, useState } from "react";
 import { Document, Page } from "react-pdf";
 
-import { fetchDocumentFile } from "../api/client";
+import { ApiError, fetchDocumentFile } from "../api/client";
 import type { DocumentInfo } from "../api/types";
+import { documentsQueryKey } from "../hooks/useDocuments";
 import { escapeHtml, findHighlightedItems, type TextItemLike } from "../lib/highlight";
 import "../lib/pdf";
 
@@ -28,13 +29,26 @@ interface Props {
 const NO_HIGHLIGHT = new Set<number>();
 
 export function PdfViewer({ sessionId, document: doc, target, onPageChange, onClose }: Props) {
+  const queryClient = useQueryClient();
   const file = useQuery({
     queryKey: ["document-file", sessionId, doc.doc_id],
-    queryFn: () => fetchDocumentFile(sessionId, doc.doc_id),
+    queryFn: async () => {
+      try {
+        return await fetchDocumentFile(sessionId, doc.doc_id);
+      } catch (err) {
+        // 404 = el documento ya no existe en el servidor (borrado o sesión vencida): refrescamos la lista,
+        // el documento desaparece de ella y el Workspace cierra el visor solo.
+        if (err instanceof ApiError && err.status === 404) {
+          queryClient.invalidateQueries({ queryKey: documentsQueryKey(sessionId) });
+        }
+        throw err;
+      }
+    },
     staleTime: Infinity, // el PDF no cambia nunca
+    retry: (count, err) => !(err instanceof ApiError && err.status === 404) && count < 1,
   });
 
-  // Total real de páginas (el backend solo cuenta las que tienen texto).
+  // Total de páginas según pdf.js (mientras carga usamos el dato del backend).
   const [numPages, setNumPages] = useState<number | null>(null);
   const [width, setWidth] = useState(0);
   const [pageText, setPageText] = useState<{ page: number; items: TextItemLike[] } | null>(null);
@@ -74,7 +88,7 @@ export function PdfViewer({ sessionId, document: doc, target, onPageChange, onCl
   const goTo = (p: number) => onPageChange(Math.min(Math.max(1, p), total));
 
   return (
-    <div className="flex h-full min-h-0 flex-col bg-slate-100">
+    <div className="flex h-full min-h-0 flex-col bg-slate-100" data-testid="pdf-viewer">
       <header className="flex items-center gap-2 border-b border-slate-200 bg-white px-3 py-2">
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-medium text-slate-800" title={doc.filename}>

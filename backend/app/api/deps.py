@@ -3,15 +3,22 @@ from typing import Annotated
 
 from fastapi import Depends, Header, HTTPException
 
+from app.services import document_store
+
 
 def get_session_id(
     x_session_id: Annotated[str, Header(description="UUID de sesión generado por el cliente")],
 ) -> str:
-    """Valida el header X-Session-ID. Se usa como nombre de carpeta, así que debe ser un UUID estricto."""
+    """
+    Valida el header X-Session-ID (se usa como nombre de carpeta, así que debe ser un UUID estricto)
+    y registra actividad, para que la limpieza automática no borre sesiones en uso.
+    """
     try:
-        return str(uuid.UUID(x_session_id))
+        session_id = str(uuid.UUID(x_session_id))
     except ValueError:
         raise HTTPException(status_code=400, detail="X-Session-ID debe ser un UUID válido.")
+    document_store.touch(session_id)
+    return session_id
 
 
 def normalize_doc_id(doc_id: str) -> str:

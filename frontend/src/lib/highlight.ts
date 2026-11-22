@@ -35,20 +35,43 @@ export function findHighlightedItems(items: readonly TextItemLike[], chunkText: 
     page += norm;
   });
 
-  // Buscamos el inicio del chunk con un "ancla" corta; si no aparece, probamos con una del medio.
-  let start = page.indexOf(needle.slice(0, ANCHOR_LENGTH));
-  if (start === -1 && needle.length > ANCHOR_LENGTH * 2) {
-    const mid = Math.floor(needle.length / 2);
-    const found = page.indexOf(needle.slice(mid, mid + ANCHOR_LENGTH));
-    if (found !== -1) start = Math.max(0, found - mid);
-  }
-  if (start === -1) return result;
+  const span = locate(page, needle);
+  if (!span) return result;
 
-  const end = start + needle.length;
+  const [start, end] = span;
   for (const r of ranges) {
     if (r.to > start && r.from < end) result.add(r.index);
   }
   return result;
+}
+
+/**
+ * Ubica el fragmento en el texto de la página con "anclas" cortas, por si el texto no coincide entero.
+ * Cada ancla fija el extremo que tiene más cerca; el otro se estima con el largo del fragmento.
+ */
+function locate(page: string, needle: string): [number, number] | null {
+  const len = needle.length;
+
+  // 1. Ancla al inicio: fija el comienzo.
+  const head = page.indexOf(needle.slice(0, ANCHOR_LENGTH));
+  if (head !== -1) return [head, head + len];
+
+  // 2. Ancla al final: fija el final.
+  const tail = needle.slice(-ANCHOR_LENGTH);
+  const tailAt = page.indexOf(tail);
+  if (tailAt !== -1) {
+    const end = tailAt + tail.length;
+    return [Math.max(0, end - len), end];
+  }
+
+  // 3. Ancla en el medio: ambos extremos se calculan desde ella (no desde un inicio ya recortado,
+  //    que correría el final más allá de donde termina el fragmento).
+  if (len > ANCHOR_LENGTH * 2) {
+    const mid = Math.floor(len / 2);
+    const midAt = page.indexOf(needle.slice(mid, mid + ANCHOR_LENGTH));
+    if (midAt !== -1) return [Math.max(0, midAt - mid), midAt + (len - mid)];
+  }
+  return null;
 }
 
 export function escapeHtml(text: string): string {

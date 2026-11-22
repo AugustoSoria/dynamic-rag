@@ -1,7 +1,9 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useCallback, useRef, useState } from "react";
 
 import { streamChat } from "../api/client";
 import type { HistoryMessage, Source } from "../api/types";
+import { documentsQueryKey } from "./useDocuments";
 
 export interface ChatMessage {
   id: string;
@@ -20,6 +22,7 @@ export function useChat(sessionId: string, docIds: string[]) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isStreaming, setIsStreaming] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
+  const queryClient = useQueryClient();
 
   const updateMessage = (id: string, patch: (m: ChatMessage) => Partial<ChatMessage>) =>
     setMessages((msgs) => msgs.map((m) => (m.id === id ? { ...m, ...patch(m) } : m)));
@@ -52,7 +55,12 @@ export function useChat(sessionId: string, docIds: string[]) {
           sessionId,
           { question: text, history, doc_ids: docIds.length ? docIds : null },
           {
-            onSources: (sources, searchQuery) => updateMessage(assistantId, () => ({ sources, searchQuery })),
+            onSources: (sources, searchQuery) => {
+              updateMessage(assistantId, () => ({ sources, searchQuery }));
+              // Sin fuentes = el backend no tiene documentos para esta sesión (p. ej. venció por inactividad).
+              // Refrescamos la lista para que la UI deje de mostrar documentos que ya no existen.
+              if (sources.length === 0) queryClient.invalidateQueries({ queryKey: documentsQueryKey(sessionId) });
+            },
             onToken: (token) => updateMessage(assistantId, (m) => ({ content: m.content + token })),
             onDone: () => updateMessage(assistantId, () => ({ status: "done" })),
             onError: (message) => updateMessage(assistantId, () => ({ status: "error", error: message })),
@@ -73,7 +81,7 @@ export function useChat(sessionId: string, docIds: string[]) {
         setIsStreaming(false);
       }
     },
-    [sessionId, docIds, messages, isStreaming],
+    [sessionId, docIds, messages, isStreaming, queryClient],
   );
 
   const stop = useCallback(() => abortRef.current?.abort(), []);

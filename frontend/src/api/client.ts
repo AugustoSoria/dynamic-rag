@@ -1,4 +1,5 @@
-import type { ChatRequest, DocumentInfo, Source } from "./types";
+import { createSSEParser } from "./sse";
+import type { ChatRequest, DocumentInfo, PublicConfig, Source } from "./types";
 
 const API_URL = (import.meta.env.VITE_API_URL ?? "").replace(/\/$/, "");
 
@@ -11,39 +12,67 @@ export class ApiError extends Error {
   }
 }
 
+const CONNECTION_ERROR = "No se pudo conectar con el servidor. Revisá tu conexión o intentá en unos segundos.";
+
+/**
+ * Mensaje para el usuario a partir de una respuesta de error. Usa el `detail` del backend si lo hay;
+ * si no (502/503/504 los genera un proxy cuando el backend no responde), un mensaje entendible.
+ */
+function errorMessage(status: number, detail: unknown): string {
+  if (typeof detail === "string") return detail;
+  if (status === 0 || status === 502 || status === 503 || status === 504) return CONNECTION_ERROR;
+  return `Error inesperado del servidor (${status}).`;
+}
+
 async function errorFromResponse(res: Response): Promise<ApiError> {
-  let message = `Error ${res.status}`;
+  let detail: unknown;
   try {
-    const body = await res.json();
-    if (typeof body.detail === "string") message = body.detail;
+    detail = (await res.json()).detail;
   } catch {
-    // respuesta sin JSON: dejamos el mensaje genérico
+    // respuesta sin JSON
   }
-  return new ApiError(message, res.status);
+  return new ApiError(errorMessage(res.status, detail), res.status);
+}
+
+/** fetch que traduce los fallos de red y las respuestas de error a ApiError con un mensaje claro. */
+async function apiFetch(path: string, init?: RequestInit, okStatuses: number[] = []): Promise<Response> {
+  let res: Response;
+  try {
+    res = await fetch(`${API_URL}${path}`, init);
+  } catch (err) {
+    // Una cancelación (AbortController) no es un error de conexión: la dejamos pasar tal cual.
+    if (err instanceof DOMException && err.name === "AbortError") throw err;
+    throw new ApiError(CONNECTION_ERROR, 0);
+  }
+  if (!res.ok && !okStatuses.includes(res.status)) throw await errorFromResponse(res);
+  return res;
 }
 
 function headers(sessionId: string, extra?: Record<string, string>) {
   return { "X-Session-ID": sessionId, ...extra };
 }
 
+// --- Configuración -------------------------------------------------------------
+
+/** Límites definidos en el backend (tamaño máximo, cantidad de documentos, vencimiento de sesión). */
+export async function fetchConfig(): Promise<PublicConfig> {
+  return (await apiFetch("/api/config")).json();
+}
+
 // --- Documentos ----------------------------------------------------------------
 
 export async function listDocuments(sessionId: string): Promise<DocumentInfo[]> {
-  const res = await fetch(`${API_URL}/api/documents`, { headers: headers(sessionId) });
-  if (!res.ok) throw await errorFromResponse(res);
-  return res.json();
+  return (await apiFetch("/api/documents", { headers: headers(sessionId) })).json();
 }
 
 export async function deleteDocument(sessionId: string, docId: string): Promise<void> {
-  const res = await fetch(`${API_URL}/api/documents/${docId}`, { method: "DELETE", headers: headers(sessionId) });
-  if (!res.ok && res.status !== 404) throw await errorFromResponse(res);
+  // 404 = ya no existe: para el usuario el resultado es el mismo que borrarlo.
+  await apiFetch(`/api/documents/${docId}`, { method: "DELETE", headers: headers(sessionId) }, [404]);
 }
 
 /** Descarga el PDF como Blob (el endpoint requiere el header de sesión, así que no alcanza con una URL). */
 export async function fetchDocumentFile(sessionId: string, docId: string): Promise<Blob> {
-  const res = await fetch(`${API_URL}/api/documents/${docId}/file`, { headers: headers(sessionId) });
-  if (!res.ok) throw await errorFromResponse(res);
-  return res.blob();
+  return (await apiFetch(`/api/documents/${docId}/file`, { headers: headers(sessionId) })).blob();
 }
 
 /**
@@ -74,10 +103,10 @@ export function uploadDocument(
         resolve(body as DocumentInfo);
       } else {
         const detail = (body as { detail?: unknown } | null)?.detail;
-        reject(new ApiError(typeof detail === "string" ? detail : `Error ${xhr.status}`, xhr.status));
+        reject(new ApiError(errorMessage(xhr.status, detail), xhr.status));
       }
     };
-    xhr.onerror = () => reject(new ApiError("No se pudo conectar con el servidor.", 0));
+    xhr.onerror = () => reject(new ApiError(CONNECTION_ERROR, 0));
 
     const form = new FormData();
     form.append("file", file);
@@ -104,54 +133,37 @@ export async function streamChat(
   handlers: ChatHandlers,
   signal: AbortSignal,
 ): Promise<void> {
-  const res = await fetch(`${API_URL}/api/chat`, {
+  const res = await apiFetch("/api/chat", {
     method: "POST",
     headers: headers(sessionId, { "Content-Type": "application/json" }),
     body: JSON.stringify(request),
     signal,
   });
-  if (!res.ok || !res.body) throw await errorFromResponse(res);
+  if (!res.body) throw new ApiError("El servidor no devolvió una respuesta.", res.status);
 
-  const reader = res.body.pipeThrough(new TextDecoderStream()).getReader();
-  let buffer = "";
-
-  const dispatch = (block: string) => {
-    let event = "message";
-    const dataLines: string[] = [];
-    for (const line of block.split("\n")) {
-      if (line.startsWith("event:")) event = line.slice(6).trim();
-      else if (line.startsWith("data:")) dataLines.push(line.slice(5).trimStart());
-    }
-    if (dataLines.length === 0) return;
-    const data = JSON.parse(dataLines.join("\n"));
-
+  const parser = createSSEParser((event, data) => {
+    const d = data as Record<string, unknown>;
     switch (event) {
       case "sources":
-        handlers.onSources(data.sources, data.search_query);
+        handlers.onSources(d.sources as Source[], d.search_query as string);
         break;
       case "token":
-        handlers.onToken(data.text);
+        handlers.onToken(d.text as string);
         break;
       case "done":
         handlers.onDone();
         break;
       case "error":
-        handlers.onError(data.message);
+        handlers.onError(d.message as string);
         break;
     }
-  };
+  });
 
+  const reader = res.body.pipeThrough(new TextDecoderStream()).getReader();
   while (true) {
     const { value, done } = await reader.read();
     if (done) break;
-    buffer += value.replace(/\r\n/g, "\n");
-
-    // Los eventos SSE se separan con una línea en blanco.
-    let sep: number;
-    while ((sep = buffer.indexOf("\n\n")) !== -1) {
-      dispatch(buffer.slice(0, sep));
-      buffer = buffer.slice(sep + 2);
-    }
+    parser.push(value);
   }
-  if (buffer.trim()) dispatch(buffer);
+  parser.end();
 }

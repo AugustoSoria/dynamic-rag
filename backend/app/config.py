@@ -33,6 +33,11 @@ class Settings(BaseSettings):
     # Límites de subida
     max_upload_mb: int = 20
     max_pages: int = 300
+    max_documents_per_session: int = 3
+
+    # Sesiones: se borran (PDFs + chunks) tras este tiempo sin actividad
+    session_ttl_minutes: int = 120
+    cleanup_interval_minutes: int = 10
 
     # CORS
     cors_origins: list[str] = ["http://localhost:5173"]

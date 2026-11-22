@@ -1,3 +1,10 @@
+export interface PublicConfig {
+  max_upload_mb: number;
+  max_pages: number;
+  max_documents_per_session: number;
+  session_ttl_minutes: number;
+}
+
 export interface DocumentInfo {
   doc_id: string;
   filename: string;

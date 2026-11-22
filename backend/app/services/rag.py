@@ -15,7 +15,7 @@ SYSTEM_PROMPT = """Sos un asistente que responde preguntas sobre documentos PDF 
 
 Reglas:
 - Respondé ÚNICAMENTE con información de las fuentes que se te dan en el último mensaje. No uses conocimiento externo.
-- Citá cada afirmación con el número de la fuente entre corchetes, por ejemplo [1] o [2][3]. Usá solo números de fuentes que existan.
+- Citá cada afirmación con el número de la fuente entre corchetes comunes, por ejemplo [1] o [2][3]. No uses otro formato de cita (como 【1】). Usá solo números de fuentes que existan.
 - Si las fuentes no contienen la respuesta, decí claramente que no encontraste esa información en el documento. No inventes.
 - Podés usar la conversación previa para entender a qué se refiere el usuario, pero los datos tienen que salir de las fuentes.
 - Respondé en el mismo idioma en que está escrita la pregunta.
@@ -30,7 +30,8 @@ REWRITE_PROMPT = """Tu tarea es reescribir la última pregunta del usuario para 
 
 NO_DOCUMENTS_MESSAGE = "No hay documentos cargados en esta sesión. Subí un PDF para empezar."
 
-_CITATION_RE = re.compile(r"\[\d+\]")
+# Citas en el formato pedido ([1]) y en el nativo de gpt-oss (【1】, 【1†L3-L5】), que a veces usa igual.
+_CITATION_RE = re.compile(r"[\[【]\d+(?:†[^\]】]*)?[\]】]")
 
 
 @dataclass
@@ -46,13 +47,18 @@ class Event:
 def ingest_pdf(session_id: str, filename: str, data: bytes) -> DocumentInfo:
     """Pipeline de ingesta: PDF → páginas → chunks → embeddings → Chroma + disco."""
     settings = get_settings()
-    pages = pdf_parser.extract_pages(data, max_pages=settings.max_pages)
-    chunks = chunker.chunk_pages(pages, settings.chunk_size, settings.chunk_overlap)
+    parsed = pdf_parser.extract_pages(data, max_pages=settings.max_pages)
+    chunks = chunker.chunk_pages(parsed.pages, settings.chunk_size, settings.chunk_overlap)
     vectors = embeddings.embed_passages([c.text for c in chunks])
 
     doc_id = uuid.uuid4().hex
     vector_store.add_chunks(session_id, doc_id, filename, chunks, vectors)
-    return document_store.save(session_id, doc_id, filename, data, num_pages=len(pages), num_chunks=len(chunks))
+    try:
+        return document_store.save(session_id, doc_id, filename, data, num_pages=parsed.page_count, num_chunks=len(chunks))
+    except Exception:
+        # Sin esto quedarían chunks de un documento que no existe, y aparecerían como fuentes en el chat.
+        vector_store.delete_document(session_id, doc_id)
+        raise
 
 
 # --- Retrieval ---------------------------------------------------------------

@@ -43,13 +43,23 @@ export function Sidebar({ docs, openDocId, onOpenDocument, onNewSession, onClose
       </header>
 
       <div className="px-5">
-        <UploadZone status={docs.upload} onFile={docs.uploadFile} onDismissError={docs.dismissUploadError} />
+        <UploadZone
+          status={docs.upload}
+          maxMb={docs.config?.max_upload_mb}
+          disabledReason={
+            docs.limitReached ? `Máximo de ${docs.config?.max_documents_per_session} documentos alcanzado` : undefined
+          }
+          onFile={docs.uploadFile}
+          onDismissError={docs.dismissUploadError}
+        />
       </div>
 
       <div className="mt-5 min-h-0 flex-1 overflow-y-auto px-5">
         <DocumentList
           documents={docs.documents}
           loading={docs.loading}
+          loadError={docs.loadError}
+          onRetry={docs.retryLoad}
           selectedIds={docs.selectedIds}
           onToggle={docs.toggleSelected}
           onDelete={docs.removeDocument}
@@ -58,7 +68,13 @@ export function Sidebar({ docs, openDocId, onOpenDocument, onNewSession, onClose
         />
       </div>
 
-      <footer className="border-t border-slate-200 px-5 py-3">
+      <footer className="space-y-2 border-t border-slate-200 px-5 py-3">
+        {docs.config && (
+          <p className="text-[11px] leading-snug text-slate-400">
+            Los documentos se eliminan automáticamente tras {formatMinutes(docs.config.session_ttl_minutes)} sin
+            actividad.
+          </p>
+        )}
         <button
           onClick={handleNewSession}
           className="flex items-center gap-2 text-sm text-slate-500 transition hover:text-slate-800"
@@ -69,4 +85,10 @@ export function Sidebar({ docs, openDocId, onOpenDocument, onNewSession, onClose
       </footer>
     </div>
   );
+}
+
+function formatMinutes(minutes: number): string {
+  if (minutes % 60 !== 0) return `${minutes} minutos`;
+  const hours = minutes / 60;
+  return hours === 1 ? "1 hora" : `${hours} horas`;
 }

@@ -14,6 +14,9 @@ def isolated_settings(tmp_path_factory):
     """Datos en una carpeta temporal y una API key falsa: los tests nunca tocan data/ ni llaman a Groq."""
     os.environ["DATA_DIR"] = str(tmp_path_factory.mktemp("data"))
     os.environ["GROQ_API_KEY"] = "test-key"
+    # Límites bajos para poder probarlos con archivos chicos.
+    os.environ["MAX_UPLOAD_MB"] = "1"
+    os.environ["MAX_DOCUMENTS_PER_SESSION"] = "3"
     get_settings.cache_clear()
     vector_store._collection.cache_clear()
     yield
@@ -30,6 +33,12 @@ def client(isolated_settings):
 @pytest.fixture
 def session_headers():
     return {"X-Session-ID": str(uuid.uuid4())}
+
+
+def upload_pdf(client, headers, pages_text=("Contenido de prueba.",), filename="doc.pdf"):
+    return client.post(
+        "/api/documents", headers=headers, files={"file": (filename, make_pdf(list(pages_text)), "application/pdf")}
+    )
 
 
 def make_pdf(pages_text: list[str]) -> bytes:

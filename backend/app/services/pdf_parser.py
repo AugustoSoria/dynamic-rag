@@ -22,7 +22,13 @@ def _clean(text: str) -> str:
     return text.strip()
 
 
-def extract_pages(data: bytes, max_pages: int | None = None) -> list[Page]:
+@dataclass
+class ParsedPdf:
+    pages: list[Page]  # solo las páginas con texto (las que se indexan)
+    page_count: int  # total de páginas del PDF, incluidas las vacías (lo que ve el usuario)
+
+
+def extract_pages(data: bytes, max_pages: int | None = None) -> ParsedPdf:
     """Extrae el texto de cada página. Lanza PdfError si el PDF no es utilizable."""
     try:
         doc = pymupdf.open(stream=data, filetype="pdf")
@@ -35,9 +41,10 @@ def extract_pages(data: bytes, max_pages: int | None = None) -> list[Page]:
         if max_pages is not None and doc.page_count > max_pages:
             raise PdfError(f"El PDF tiene {doc.page_count} páginas; el máximo es {max_pages}.")
 
+        page_count = doc.page_count
         pages = [Page(number=i + 1, text=_clean(page.get_text("text"))) for i, page in enumerate(doc)]
 
     pages = [p for p in pages if p.text]
     if not pages:
         raise PdfError("El PDF no tiene texto extraíble (posiblemente es un documento escaneado).")
-    return pages
+    return ParsedPdf(pages=pages, page_count=page_count)

@@ -41,10 +41,11 @@ def test_chunk_pages_keeps_page_numbers():
 
 # --- pdf parser ------------------------------------------------------------
 
-def test_extract_pages_skips_empty_pages():
-    pages = extract_pages(make_pdf(["Primera página", "", "Tercera página"]))
-    assert [p.number for p in pages] == [1, 3]
-    assert pages[0].text == "Primera página"
+def test_extract_pages_skips_empty_pages_but_counts_them():
+    parsed = extract_pages(make_pdf(["Primera página", "", "Tercera página"]))
+    assert [p.number for p in parsed.pages] == [1, 3]  # se indexan solo las páginas con texto
+    assert parsed.pages[0].text == "Primera página"
+    assert parsed.page_count == 3  # pero el total incluye la vacía
 
 
 def test_pdf_without_text_raises():
