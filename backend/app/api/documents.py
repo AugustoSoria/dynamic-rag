@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, UploadFile, status
 from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import FileResponse
 
-from app.api.deps import DocId, SessionId
+from app.api.deps import DocId, SessionId, UploadRateLimit
 from app.config import get_settings
 from app.models import DocumentInfo, JobStatus
 from app.services import document_store, jobs, rag, vector_store
@@ -11,7 +11,9 @@ from app.services.pdf_parser import PdfError
 router = APIRouter(prefix="/api/documents", tags=["documents"])
 
 
-@router.post("", response_model=JobStatus, status_code=status.HTTP_202_ACCEPTED)
+@router.post(
+    "", response_model=JobStatus, status_code=status.HTTP_202_ACCEPTED, dependencies=[UploadRateLimit]
+)
 async def upload_document(file: UploadFile, session_id: SessionId) -> JobStatus:
     """
     Valida el PDF y lo encola para procesar en segundo plano. Responde 202 con el trabajo:

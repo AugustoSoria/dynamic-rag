@@ -39,6 +39,10 @@ class Settings(BaseSettings):
     session_ttl_minutes: int = 120
     cleanup_interval_minutes: int = 10
 
+    # Límite de uso por IP (por hora). 0 = sin límite.
+    rate_limit_chat_per_hour: int = 30
+    rate_limit_uploads_per_hour: int = 10
+
     # CORS
     cors_origins: list[str] = ["http://localhost:5173"]
 

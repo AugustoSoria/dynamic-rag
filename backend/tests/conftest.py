@@ -18,6 +18,9 @@ def isolated_settings(tmp_path_factory):
     # Límites bajos para poder probarlos con archivos chicos.
     os.environ["MAX_UPLOAD_MB"] = "1"
     os.environ["MAX_DOCUMENTS_PER_SESSION"] = "3"
+    # Sin límite de uso por IP (todos los tests salen de la misma IP); test_rate_limit lo activa.
+    os.environ["RATE_LIMIT_CHAT_PER_HOUR"] = "0"
+    os.environ["RATE_LIMIT_UPLOADS_PER_HOUR"] = "0"
     get_settings.cache_clear()
     vector_store._collection.cache_clear()
     yield

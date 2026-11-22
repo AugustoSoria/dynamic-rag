@@ -7,7 +7,7 @@ import groq
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
 
-from app.api.deps import SessionId
+from app.api.deps import ChatRateLimit, SessionId
 from app.models import ChatRequest
 from app.services import llm, rag
 
@@ -42,6 +42,7 @@ def _event_stream(session_id: str, request: ChatRequest, doc_ids: list[str] | No
 @router.post(
     "/chat",
     response_class=StreamingResponse,
+    dependencies=[ChatRateLimit],
     responses={200: {"content": {"text/event-stream": {}}, "description": "Stream SSE: sources → token* → done | error"}},
 )
 def chat(request: ChatRequest, session_id: SessionId) -> StreamingResponse:
@@ -61,5 +62,5 @@ def chat(request: ChatRequest, session_id: SessionId) -> StreamingResponse:
     return StreamingResponse(
         _event_stream(session_id, request, doc_ids),
         media_type="text/event-stream",
-        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},  # evita buffering en proxies (HF Spaces)
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},  # evita buffering en proxies
     )

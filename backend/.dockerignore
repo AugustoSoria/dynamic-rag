@@ -1,0 +1,12 @@
+# Nunca meter secretos en la imagen: las variables se pasan al levantar el contenedor.
+.env
+.env.*
+!.env.example
+
+.venv/
+data/
+test_pdfs/
+tests/
+scripts/
+**/__pycache__/
+.pytest_cache/

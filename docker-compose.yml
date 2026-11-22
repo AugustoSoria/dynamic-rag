@@ -1,0 +1,40 @@
+# Backend + Caddy (HTTPS automático). El frontend se publica aparte en Vercel.
+#
+# Variables (archivo .env en esta carpeta, junto a este archivo):
+#   DOMAIN   dominio público del backend, p. ej. 3-15-20-1.sslip.io (en local: localhost)
+# Variables del backend: backend/.env (GROQ_API_KEY, CORS_ORIGINS, ...)
+
+services:
+  backend:
+    build: ./backend
+    env_file: ./backend/.env
+    volumes:
+      - rag_data:/app/data
+    restart: unless-stopped
+    # Sin "ports": solo Caddy lo ve, por la red interna de Docker.
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 30s
+      timeout: 5s
+      start_period: 60s
+      retries: 3
+
+  caddy:
+    image: caddy:2
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN:?Definí DOMAIN en el archivo .env}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data # certificados: si se pierden, se vuelven a pedir (Let's Encrypt limita cuántos)
+      - caddy_config:/config
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  rag_data:
+  caddy_data:
+  caddy_config:
