@@ -91,7 +91,7 @@ Resources:
     Properties:
       GroupDescription: Dynamic RAG - HTTP y HTTPS publicos (sin SSH, se entra con Session Manager)
       SecurityGroupIngress:
-        - { IpProtocol: tcp, FromPort: 80, ToPort: 80, CidrIp: 0.0.0.0/0, Description: "Caddy: desafio de Let's Encrypt y redireccion a HTTPS" }
+        - { IpProtocol: tcp, FromPort: 80, ToPort: 80, CidrIp: 0.0.0.0/0, Description: "Caddy: certificado de Lets Encrypt y redireccion a HTTPS" }
         - { IpProtocol: tcp, FromPort: 443, ToPort: 443, CidrIp: 0.0.0.0/0, Description: API por HTTPS }
       Tags:
         - { Key: Name, Value: dynamic-rag }
