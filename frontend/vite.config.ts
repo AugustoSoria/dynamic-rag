@@ -1,9 +1,14 @@
+/// <reference types="vitest/config" />
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  test: {
+    // Solo tests unitarios: los de e2e/ son de Playwright y se corren con `npm run e2e`.
+    include: ["src/**/*.test.ts"],
+  },
   optimizeDeps: {
     // react-pdf solo se importa desde el visor, que se carga con lazy(). Sin esto, en desarrollo Vite
     // lo descubre recién al abrir el primer PDF y recarga la página entera (se pierde el chat).

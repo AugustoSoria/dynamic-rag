@@ -38,28 +38,30 @@ export function Workspace({ sessionId, onNewSession }: Props) {
     setSidebarOpen(false);
   };
 
-  const sidebar = (
-    <Sidebar
-      docs={docs}
-      openDocId={viewerDoc?.doc_id}
-      onOpenDocument={openDocument}
-      onNewSession={onNewSession}
-      onClose={() => setSidebarOpen(false)}
-    />
-  );
-
   return (
     <div className="flex h-full">
-      {/* Escritorio: sidebar fija */}
-      <aside className="hidden w-80 shrink-0 border-r border-slate-200 bg-white md:flex">{sidebar}</aside>
-
-      {/* Mobile: sidebar como drawer */}
+      {/* Mobile: fondo oscuro detrás del menú abierto */}
       {sidebarOpen && (
-        <div className="fixed inset-0 z-40 md:hidden">
-          <div className="absolute inset-0 bg-slate-900/40" onClick={() => setSidebarOpen(false)} />
-          <aside className="absolute inset-y-0 left-0 flex w-[85%] max-w-80 bg-white shadow-xl">{sidebar}</aside>
-        </div>
+        <div className="fixed inset-0 z-40 bg-slate-900/40 md:hidden" onClick={() => setSidebarOpen(false)} />
       )}
+
+      {/*
+        Una sola instancia del sidebar: fija a la izquierda en escritorio y menú deslizable en mobile.
+        (Antes se renderizaba dos veces, una oculta con CSS, duplicando su DOM y su estado.)
+      */}
+      <aside
+        className={`flex shrink-0 bg-white transition-[translate,visibility] duration-200 md:static md:w-80 md:border-r md:border-slate-200 max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:z-50 max-md:w-[85%] max-md:max-w-80 max-md:shadow-xl ${
+          sidebarOpen ? "" : "max-md:invisible max-md:-translate-x-full"
+        }`}
+      >
+        <Sidebar
+          docs={docs}
+          openDocId={viewerDoc?.doc_id}
+          onOpenDocument={openDocument}
+          onNewSession={onNewSession}
+          onClose={() => setSidebarOpen(false)}
+        />
+      </aside>
 
       <main className="flex min-w-0 flex-1 flex-col">
         <div className="flex items-center gap-3 border-b border-slate-200 bg-white px-4 py-3 md:hidden">

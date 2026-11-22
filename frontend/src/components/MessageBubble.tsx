@@ -26,7 +26,7 @@ export function MessageBubble({ message, question, onOpenSource }: Props) {
   const thinking = streaming && !message.content;
 
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-3" data-testid="assistant-message" data-status={message.status}>
       <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-indigo-600">
         <Sparkles className="size-4" />
       </div>

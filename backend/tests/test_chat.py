@@ -81,7 +81,7 @@ def test_history_is_used_for_rewrite_and_answer(client, session_headers, fake_ll
     upload(client, session_headers)
     history = [
         {"role": "user", "content": "¿Qué es Acme?"},
-        {"role": "assistant", "content": "Es una empresa de robots [2]."},
+        {"role": "assistant", "content": "Es una empresa de robots [2]【3】 fundada en 1998【1†L2-L4】."},
     ]
     r = client.post("/api/chat", headers=session_headers, json={"question": "¿Y quién la fundó?", "history": history})
 
@@ -92,7 +92,7 @@ def test_history_is_used_for_rewrite_and_answer(client, session_headers, fake_ll
     # ...y la respuesta recibe el historial (sin las citas viejas) + la pregunta original.
     messages = fake_llm.stream_calls[0]
     assert [m["role"] for m in messages] == ["system", "user", "assistant", "user"]
-    assert "[2]" not in messages[2]["content"]
+    assert messages[2]["content"] == "Es una empresa de robots  fundada en 1998."  # sin citas en ningún formato
     assert messages[-1]["content"].endswith("Pregunta: ¿Y quién la fundó?")
 
 

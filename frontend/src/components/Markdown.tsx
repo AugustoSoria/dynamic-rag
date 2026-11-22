@@ -1,19 +1,13 @@
 import ReactMarkdown, { type Components } from "react-markdown";
 
 import type { Source } from "../api/types";
+import { CITATION_HREF, linkCitations } from "../lib/citations";
 
 interface Props {
   content: string;
   sources?: Source[];
   streaming?: boolean;
   onOpenSource?: (source: Source) => void;
-}
-
-const CITATION_HREF = "#cite-";
-
-/** Convierte las citas [n] en links internos para poder renderizarlas como chips. */
-function linkCitations(text: string): string {
-  return text.replace(/\[(\d{1,2})\](?!\()/g, (_, n) => `[${n}](${CITATION_HREF}${n})`);
 }
 
 export function Markdown({ content, sources = [], streaming, onOpenSource }: Props) {

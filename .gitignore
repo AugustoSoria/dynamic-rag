@@ -19,3 +19,7 @@ dist/
 .vscode/
 .idea/
 .DS_Store
+
+# PDFs generados para pruebas manuales
+backend/test_pdfs/
+frontend/e2e-results/
