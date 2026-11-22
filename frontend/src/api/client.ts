@@ -1,5 +1,5 @@
 import { createSSEParser } from "./sse";
-import type { ChatRequest, DocumentInfo, PublicConfig, Source } from "./types";
+import type { ChatRequest, DocumentInfo, JobStatus, PublicConfig, Source } from "./types";
 
 const API_URL = (import.meta.env.VITE_API_URL ?? "").replace(/\/$/, "");
 
@@ -75,15 +75,26 @@ export async function fetchDocumentFile(sessionId: string, docId: string): Promi
   return (await apiFetch(`/api/documents/${docId}/file`, { headers: headers(sessionId) })).blob();
 }
 
+/** Estado del procesamiento en segundo plano de un PDF. */
+export async function fetchJob(sessionId: string, docId: string): Promise<JobStatus> {
+  return (await apiFetch(`/api/documents/jobs/${docId}`, { headers: headers(sessionId) })).json();
+}
+
+/** Trabajos en cola o en proceso de la sesión (para retomar el progreso tras recargar la página). */
+export async function listActiveJobs(sessionId: string): Promise<JobStatus[]> {
+  return (await apiFetch("/api/documents/jobs", { headers: headers(sessionId) })).json();
+}
+
 /**
  * Sube un PDF. Usa XMLHttpRequest porque fetch no informa el progreso de subida.
- * onProgress recibe 0..1 mientras se sube; al llegar a 1 el backend empieza a procesar.
+ * onProgress recibe 0..1 mientras se sube. El backend valida el PDF y responde enseguida con el
+ * trabajo de procesamiento (202); el avance se sigue con fetchJob.
  */
 export function uploadDocument(
   sessionId: string,
   file: File,
   onProgress: (fraction: number) => void,
-): Promise<DocumentInfo> {
+): Promise<JobStatus> {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", `${API_URL}/api/documents`);
@@ -100,7 +111,7 @@ export function uploadDocument(
         // ignorado
       }
       if (xhr.status >= 200 && xhr.status < 300) {
-        resolve(body as DocumentInfo);
+        resolve(body as JobStatus);
       } else {
         const detail = (body as { detail?: unknown } | null)?.detail;
         reject(new ApiError(errorMessage(xhr.status, detail), xhr.status));

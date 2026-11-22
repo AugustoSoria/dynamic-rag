@@ -10,7 +10,7 @@ from fastapi.responses import JSONResponse
 from app.api import chat, documents
 from app.config import get_settings
 from app.middleware import UploadSizeLimitMiddleware
-from app.services import embeddings, sessions
+from app.services import embeddings, jobs, sessions
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -36,6 +36,7 @@ async def lifespan(app: FastAPI):
     cleanup_task.cancel()
     with suppress(asyncio.CancelledError):
         await cleanup_task
+    jobs.shutdown()
 
 
 app = FastAPI(

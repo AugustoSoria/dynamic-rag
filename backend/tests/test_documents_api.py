@@ -1,12 +1,13 @@
 import uuid
 
-from tests.conftest import make_pdf, upload_pdf
+from tests.conftest import make_pdf, upload_pdf, wait_for_job
 
 
 def test_upload_list_file_delete(client, session_headers):
     r = upload_pdf(client, session_headers, ["Página uno", "", "Página tres"], filename="informe.pdf")
-    assert r.status_code == 201
-    doc = r.json()
+    assert r.status_code == 202
+    job = wait_for_job(client, session_headers, r.json()["doc_id"])
+    doc = job["document"]
     assert doc["filename"] == "informe.pdf"
     assert doc["num_pages"] == 3  # incluye la página en blanco
     assert doc["num_chunks"] == 2
@@ -64,7 +65,7 @@ def test_rejects_pdf_without_text(client, session_headers):
 
 def test_max_documents_per_session(client, session_headers):
     for i in range(3):  # MAX_DOCUMENTS_PER_SESSION=3 en conftest
-        assert upload_pdf(client, session_headers, filename=f"{i}.pdf").status_code == 201
+        assert upload_pdf(client, session_headers, filename=f"{i}.pdf").status_code == 202
     r = upload_pdf(client, session_headers, filename="extra.pdf")
     assert r.status_code == 409
     assert "máximo de 3" in r.json()["detail"]

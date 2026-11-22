@@ -4,15 +4,19 @@ from fastapi.responses import FileResponse
 
 from app.api.deps import DocId, SessionId
 from app.config import get_settings
-from app.models import DocumentInfo
-from app.services import document_store, rag, vector_store
+from app.models import DocumentInfo, JobStatus
+from app.services import document_store, jobs, rag, vector_store
 from app.services.pdf_parser import PdfError
 
 router = APIRouter(prefix="/api/documents", tags=["documents"])
 
 
-@router.post("", response_model=DocumentInfo, status_code=status.HTTP_201_CREATED)
-async def upload_document(file: UploadFile, session_id: SessionId) -> DocumentInfo:
+@router.post("", response_model=JobStatus, status_code=status.HTTP_202_ACCEPTED)
+async def upload_document(file: UploadFile, session_id: SessionId) -> JobStatus:
+    """
+    Valida el PDF y lo encola para procesar en segundo plano. Responde 202 con el trabajo:
+    el cliente sigue el avance con GET /api/documents/jobs/{doc_id}.
+    """
     # El tamaño máximo lo controla UploadSizeLimitMiddleware mientras llega el body (ver app/middleware.py).
     settings = get_settings()
 
@@ -20,7 +24,9 @@ async def upload_document(file: UploadFile, session_id: SessionId) -> DocumentIn
     if not filename.lower().endswith(".pdf"):
         raise HTTPException(status_code=415, detail="Solo se aceptan archivos PDF.")
 
-    if len(document_store.list_documents(session_id)) >= settings.max_documents_per_session:
+    # Los que se están procesando también cuentan para el límite.
+    in_use = len(document_store.list_documents(session_id)) + jobs.count_active(session_id)
+    if in_use >= settings.max_documents_per_session:
         raise HTTPException(
             status_code=409,
             detail=f"Alcanzaste el máximo de {settings.max_documents_per_session} documentos. Eliminá alguno para subir otro.",
@@ -31,10 +37,26 @@ async def upload_document(file: UploadFile, session_id: SessionId) -> DocumentIn
         raise HTTPException(status_code=415, detail="El archivo no es un PDF válido.")
 
     try:
-        # Parsing + embeddings son CPU-bound: los corremos fuera del event loop.
-        return await run_in_threadpool(rag.ingest_pdf, session_id, filename, data)
+        # La parte rápida (texto + chunks) se hace ya, para devolver los errores de validación al instante.
+        prepared = await run_in_threadpool(rag.prepare_pdf, data)
     except PdfError as exc:
         raise HTTPException(status_code=422, detail=str(exc))
+
+    return jobs.submit(session_id, filename, data, prepared)
+
+
+@router.get("/jobs", response_model=list[JobStatus])
+def list_active_jobs(session_id: SessionId) -> list[JobStatus]:
+    """Trabajos en cola o en proceso (para retomar el progreso si el usuario recarga la página)."""
+    return jobs.active_for_session(session_id)
+
+
+@router.get("/jobs/{doc_id}", response_model=JobStatus)
+def get_job(doc_id: DocId, session_id: SessionId) -> JobStatus:
+    job = jobs.get(session_id, doc_id)
+    if job is None:
+        raise HTTPException(status_code=404, detail="Trabajo no encontrado.")
+    return job
 
 
 @router.get("", response_model=list[DocumentInfo])

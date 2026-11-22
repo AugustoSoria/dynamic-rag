@@ -4,13 +4,16 @@
  * El texto del chunk pasó por la limpieza del backend (espacios colapsados, palabras cortadas con guion
  * unidas), así que no coincide carácter a carácter con el texto crudo de pdf.js. Para comparar,
  * normalizamos ambos lados quitando espacios y guiones, y trabajamos con offsets sobre ese texto normalizado.
+ *
+ * También aplicamos NFKC: PyMuPDF (backend) conserva las ligaduras tipográficas ("ﬁ" como un solo
+ * carácter) y pdf.js las separa ("fi"); sin normalizar, esos fragmentos no se encontrarían.
  */
 
 const STRIP_RE = /[\s\-­‐‑]+/g; // espacios, guiones y soft hyphen
 const ANCHOR_LENGTH = 40;
 
 function normalize(text: string): string {
-  return text.replace(STRIP_RE, "").toLowerCase();
+  return text.normalize("NFKC").replace(STRIP_RE, "").toLowerCase();
 }
 
 /** Items de pdf.js: los TextItem tienen `str`; los TextMarkedContent (marcas de estructura) no. */

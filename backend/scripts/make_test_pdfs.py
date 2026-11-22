@@ -47,6 +47,21 @@ def main() -> None:
         ],
     )
 
+    # Documento largo (~200 fragmentos): tarda unos segundos en procesarse, para ver el progreso real.
+    temas = ["energía solar", "agricultura", "transporte urbano", "salud pública", "educación", "turismo"]
+    write(
+        "documento_largo.pdf",
+        [
+            f"Capítulo {n}\n\n"
+            + " ".join(
+                f"En el apartado {n}.{i} se analiza el impacto de la {temas[(n + i) % len(temas)]} "
+                f"en la región número {i}, con datos del año {1990 + (n * 7 + i) % 35}."
+                for i in range(1, 24)
+            )
+            for n in range(1, 41)
+        ],
+    )
+
     # Segundo documento sin relación con el primero (para probar el filtro por documento).
     write(
         "receta_empanadas.pdf",

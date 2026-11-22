@@ -3,6 +3,39 @@ import { useRef, useState } from "react";
 
 import type { UploadStatus } from "../hooks/useDocuments";
 
+/** Texto y avance (0..1, o null si no se puede medir) para cada etapa de la subida. */
+function describe(status: BusyStatus): { fraction: number | null; label: string } {
+  switch (status.state) {
+    case "uploading":
+      return { fraction: status.progress, label: `Subiendo… ${Math.round(status.progress * 100)}%` };
+    case "reading":
+      return { fraction: null, label: "Leyendo el PDF…" };
+    case "queued":
+      return {
+        fraction: null,
+        label:
+          status.position > 0
+            ? `En cola: ${status.position} ${status.position === 1 ? "documento" : "documentos"} antes que este…`
+            : "Por empezar…",
+      };
+    case "processing": {
+      const fraction = status.total ? status.processed / status.total : 0;
+      const eta = status.etaSeconds === null ? "" : ` · ${formatEta(status.etaSeconds)}`;
+      return {
+        fraction,
+        label: `Generando embeddings: ${status.processed} de ${status.total} fragmentos (${Math.round(fraction * 100)}%)${eta}`,
+      };
+    }
+  }
+}
+
+function formatEta(seconds: number): string {
+  if (seconds < 10) return "casi listo";
+  if (seconds < 60) return `~${Math.ceil(seconds / 10) * 10} s restantes`;
+  const minutes = Math.round(seconds / 60);
+  return `~${minutes} min restante${minutes === 1 ? "" : "s"}`;
+}
+
 interface Props {
   status: UploadStatus;
   /** Tamaño máximo según el backend (undefined mientras carga la configuración). */
@@ -13,10 +46,12 @@ interface Props {
   onDismissError: () => void;
 }
 
+type BusyStatus = Exclude<UploadStatus, { state: "idle" } | { state: "error" }>;
+
 export function UploadZone({ status, maxMb, disabledReason, onFile, onDismissError }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragging, setDragging] = useState(false);
-  const busy = status.state === "uploading" || status.state === "processing";
+  const busy = status.state !== "idle" && status.state !== "error";
 
   const handleFiles = (files: FileList | null) => {
     const file = files?.[0];
@@ -24,22 +59,26 @@ export function UploadZone({ status, maxMb, disabledReason, onFile, onDismissErr
   };
 
   if (busy) {
-    const uploading = status.state === "uploading";
+    const { fraction, label } = describe(status);
     return (
-      <div className="rounded-xl border border-indigo-200 bg-indigo-50/60 p-4">
+      <div className="rounded-xl border border-indigo-200 bg-indigo-50/60 p-4" data-testid="upload-progress">
         <div className="flex items-center gap-2 text-sm font-medium text-indigo-900">
           <Loader2 className="size-4 shrink-0 animate-spin" />
           <span className="truncate">{status.filename}</span>
         </div>
-        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-indigo-100">
+        <div
+          className="mt-3 h-1.5 overflow-hidden rounded-full bg-indigo-100"
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={fraction === null ? undefined : Math.round(fraction * 100)}
+        >
           <div
-            className={`h-full rounded-full bg-indigo-500 transition-all ${uploading ? "" : "w-full animate-pulse"}`}
-            style={uploading ? { width: `${Math.round(status.progress * 100)}%` } : undefined}
+            className={`h-full rounded-full bg-indigo-500 transition-all duration-500 ${fraction === null ? "w-full animate-pulse" : ""}`}
+            style={fraction === null ? undefined : { width: `${Math.max(2, Math.round(fraction * 100))}%` }}
           />
         </div>
-        <p className="mt-2 text-xs text-indigo-700">
-          {uploading ? `Subiendo… ${Math.round(status.progress * 100)}%` : "Extrayendo texto y generando embeddings…"}
-        </p>
+        <p className="mt-2 text-xs text-indigo-700">{label}</p>
       </div>
     );
   }

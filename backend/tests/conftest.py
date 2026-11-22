@@ -1,4 +1,5 @@
 import os
+import time
 import uuid
 
 import pymupdf
@@ -35,10 +36,25 @@ def session_headers():
     return {"X-Session-ID": str(uuid.uuid4())}
 
 
-def upload_pdf(client, headers, pages_text=("Contenido de prueba.",), filename="doc.pdf"):
-    return client.post(
-        "/api/documents", headers=headers, files={"file": (filename, make_pdf(list(pages_text)), "application/pdf")}
-    )
+def upload_pdf(client, headers, pages_text=("Contenido de prueba.",), filename="doc.pdf", data: bytes | None = None):
+    """Sube un PDF y, si fue aceptado (202), espera a que termine de procesarse. Devuelve la respuesta del POST."""
+    pdf = data if data is not None else make_pdf(list(pages_text))
+    r = client.post("/api/documents", headers=headers, files={"file": (filename, pdf, "application/pdf")})
+    if r.status_code == 202:
+        job = wait_for_job(client, headers, r.json()["doc_id"])
+        assert job["status"] == "ready", job
+    return r
+
+
+def wait_for_job(client, headers, doc_id: str, timeout: float = 60) -> dict:
+    """Consulta el trabajo hasta que termine (ready o error)."""
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        job = client.get(f"/api/documents/jobs/{doc_id}", headers=headers).json()
+        if job["status"] in ("ready", "error"):
+            return job
+        time.sleep(0.05)
+    raise TimeoutError(f"El trabajo {doc_id} no terminó en {timeout}s")
 
 
 def make_pdf(pages_text: list[str]) -> bytes:

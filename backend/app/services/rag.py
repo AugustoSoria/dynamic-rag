@@ -1,7 +1,7 @@
 import logging
 import re
 import uuid
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from dataclasses import dataclass
 from typing import Any
 
@@ -44,21 +44,50 @@ class Event:
 
 # --- Ingesta -----------------------------------------------------------------
 
-def ingest_pdf(session_id: str, filename: str, data: bytes) -> DocumentInfo:
-    """Pipeline de ingesta: PDF → páginas → chunks → embeddings → Chroma + disco."""
+@dataclass
+class PreparedPdf:
+    page_count: int
+    chunks: list[chunker.Chunk]
+
+
+def prepare_pdf(data: bytes) -> PreparedPdf:
+    """
+    Parte rápida de la ingesta (menos de 1 s aun con cientos de páginas): extraer texto y cortarlo.
+    Se hace antes de responder la subida para que los errores (sin texto, contraseña...) lleguen al instante.
+    """
     settings = get_settings()
     parsed = pdf_parser.extract_pages(data, max_pages=settings.max_pages)
     chunks = chunker.chunk_pages(parsed.pages, settings.chunk_size, settings.chunk_overlap)
-    vectors = embeddings.embed_passages([c.text for c in chunks])
+    return PreparedPdf(page_count=parsed.page_count, chunks=chunks)
 
-    doc_id = uuid.uuid4().hex
+
+def index_pdf(
+    session_id: str,
+    doc_id: str,
+    filename: str,
+    data: bytes,
+    prepared: PreparedPdf,
+    on_progress: Callable[[int, int], None] | None = None,
+) -> DocumentInfo:
+    """Parte lenta: embeddings → Chroma → disco. Los chunks se guardan recién al final, todos juntos,
+    así un documento a medio procesar nunca aparece en las búsquedas."""
+    chunks = prepared.chunks
+    vectors = embeddings.embed_passages([c.text for c in chunks], on_progress=on_progress)
+
     vector_store.add_chunks(session_id, doc_id, filename, chunks, vectors)
     try:
-        return document_store.save(session_id, doc_id, filename, data, num_pages=parsed.page_count, num_chunks=len(chunks))
+        return document_store.save(
+            session_id, doc_id, filename, data, num_pages=prepared.page_count, num_chunks=len(chunks)
+        )
     except Exception:
         # Sin esto quedarían chunks de un documento que no existe, y aparecerían como fuentes en el chat.
         vector_store.delete_document(session_id, doc_id)
         raise
+
+
+def ingest_pdf(session_id: str, filename: str, data: bytes) -> DocumentInfo:
+    """Ingesta completa y sincrónica (la API usa la versión en segundo plano de app/services/jobs.py)."""
+    return index_pdf(session_id, uuid.uuid4().hex, filename, data, prepare_pdf(data))
 
 
 # --- Retrieval ---------------------------------------------------------------

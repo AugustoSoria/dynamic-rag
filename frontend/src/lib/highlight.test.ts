@@ -36,6 +36,13 @@ describe("findHighlightedItems", () => {
     expect(result.has(8)).toBe(false);
   });
 
+  it("encuentra el fragmento aunque un lado tenga ligaduras tipográficas (ﬁ, ﬂ) y el otro no", () => {
+    const pdfjsItems = [{ str: "A Company Profile" }, { str: "The first paragraph." }];
+    // Así llega el chunk desde PyMuPDF: con los caracteres de ligadura.
+    const chunk = "A Company Proﬁle\nThe ﬁrst paragraph.";
+    expect([...findHighlightedItems(pdfjsItems, chunk)]).toEqual([0, 1]);
+  });
+
   it("es insensible a mayúsculas", () => {
     expect([...findHighlightedItems(items, "EN 2020 LANZÓ EL ROBOT ZETA.")]).toEqual([8]);
   });

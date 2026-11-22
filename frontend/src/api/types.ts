@@ -13,6 +13,19 @@ export interface DocumentInfo {
   created_at: string;
 }
 
+/** Procesamiento en segundo plano de un PDF subido (ver backend/app/services/jobs.py). */
+export interface JobStatus {
+  doc_id: string;
+  filename: string;
+  status: "queued" | "processing" | "ready" | "error";
+  processed: number;
+  total: number;
+  queue_position: number;
+  elapsed_seconds: number;
+  error: string | null;
+  document: DocumentInfo | null;
+}
+
 export interface Source {
   index: number;
   doc_id: string;

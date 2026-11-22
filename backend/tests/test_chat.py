@@ -3,7 +3,7 @@ import json
 import pytest
 
 from app.services import llm
-from tests.conftest import make_pdf
+from tests.conftest import make_pdf, upload_pdf
 
 PDF = make_pdf(
     [
@@ -49,8 +49,8 @@ def parse_sse(body: str) -> list[tuple[str, dict]]:
 
 
 def upload(client, headers) -> str:
-    r = client.post("/api/documents", headers=headers, files={"file": ("acme.pdf", PDF, "application/pdf")})
-    assert r.status_code == 201
+    r = upload_pdf(client, headers, filename="acme.pdf", data=PDF)
+    assert r.status_code == 202
     return r.json()["doc_id"]
 
 

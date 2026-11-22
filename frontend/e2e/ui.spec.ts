@@ -36,6 +36,26 @@ test("cuenta las páginas en blanco en el total", async ({ page }) => {
   await linger(page);
 });
 
+test("muestra el progreso real de un documento largo y lo retoma al recargar", async ({ page }) => {
+  await page.locator('input[type="file"]').setInputFiles(pdf("documento_largo.pdf"));
+
+  // El avance se informa en fragmentos procesados, no con una barra indeterminada.
+  const progress = page.getByTestId("upload-progress");
+  await expect(progress).toContainText(/Generando embeddings: \d+ de \d+ fragmentos/, { timeout: 30_000 });
+  await expect(progress).toContainText(/Generando embeddings: [1-9]\d* de/, { timeout: 30_000 }); // avanzó
+  await linger(page, 1000);
+
+  // Recargar a mitad de camino no pierde el trabajo: el frontend lo retoma desde el backend.
+  await page.reload();
+  await expect(page.getByTestId("document-item").filter({ hasText: "documento_largo.pdf" }).or(progress)).toBeVisible();
+
+  await expect(page.getByTestId("document-item").filter({ hasText: "documento_largo.pdf" })).toBeVisible({
+    timeout: 90_000,
+  });
+  await expect(progress).toBeHidden();
+  await linger(page);
+});
+
 test("bloquea la subida al llegar al máximo de documentos", async ({ page }) => {
   await uploadPdf(page, "informe_acme.pdf");
   await uploadPdf(page, "receta_empanadas.pdf");

@@ -12,6 +12,20 @@ class DocumentInfo(BaseModel):
     created_at: datetime
 
 
+class JobStatus(BaseModel):
+    """Estado del procesamiento en segundo plano de un PDF subido."""
+
+    doc_id: str
+    filename: str
+    status: Literal["queued", "processing", "ready", "error"]
+    processed: int = Field(description="Fragmentos con embeddings ya generados.")
+    total: int = Field(description="Total de fragmentos del documento.")
+    queue_position: int = Field(default=0, description="Trabajos por delante en la cola (0 = procesándose o terminado).")
+    elapsed_seconds: float = Field(default=0, description="Segundos desde que empezó a procesarse (para estimar lo que falta).")
+    error: str | None = None
+    document: DocumentInfo | None = Field(default=None, description="El documento, cuando status es 'ready'.")
+
+
 class HistoryMessage(BaseModel):
     role: Literal["user", "assistant"]
     content: str = Field(max_length=8000)
