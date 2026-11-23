@@ -1,0 +1,5290 @@
+{
+ "config": {
+  "label": "base",
+  "date": "2026-11-23T17:29:34",
+  "rewrite": false,
+  "embedding_model": "intfloat/multilingual-e5-small",
+  "chunk_size": 800,
+  "chunk_overlap": 150,
+  "top_k": 5
+ },
+ "summary": {
+  "solo": {
+   "referencia": {
+    "n": 6,
+    "hit": 1.0,
+    "frag": 0.8333333333333334,
+    "mrr": 0.75
+   },
+   "TOTAL": {
+    "n": 57,
+    "hit": 0.9298245614035088,
+    "frag": 0.8596491228070176,
+    "mrr": 0.8192982456140352
+   },
+   "dato": {
+    "n": 29,
+    "hit": 0.9655172413793104,
+    "frag": 0.9310344827586207,
+    "mrr": 0.8603448275862069
+   },
+   "seguimiento": {
+    "n": 5,
+    "hit": 0.8,
+    "frag": 0.6,
+    "mrr": 0.65
+   },
+   "numero": {
+    "n": 8,
+    "hit": 0.875,
+    "frag": 0.875,
+    "mrr": 0.8125
+   },
+   "otro_idioma": {
+    "n": 9,
+    "hit": 0.8888888888888888,
+    "frag": 0.7777777777777778,
+    "mrr": 0.8333333333333334
+   }
+  },
+  "todos": {
+   "referencia": {
+    "n": 6,
+    "hit": 1.0,
+    "frag": 0.6666666666666666,
+    "mrr": 0.625
+   },
+   "TOTAL": {
+    "n": 57,
+    "hit": 0.9122807017543859,
+    "frag": 0.8245614035087719,
+    "mrr": 0.7798245614035089
+   },
+   "dato": {
+    "n": 29,
+    "hit": 0.9655172413793104,
+    "frag": 0.9310344827586207,
+    "mrr": 0.8603448275862069
+   },
+   "seguimiento": {
+    "n": 5,
+    "hit": 0.8,
+    "frag": 0.6,
+    "mrr": 0.55
+   },
+   "numero": {
+    "n": 8,
+    "hit": 0.875,
+    "frag": 0.875,
+    "mrr": 0.8125
+   },
+   "otro_idioma": {
+    "n": 9,
+    "hit": 0.7777777777777778,
+    "frag": 0.6666666666666666,
+    "mrr": 0.7222222222222222
+   }
+  },
+  "top_score": {
+   "con respuesta": {
+    "min": 0.7534,
+    "mediana": 0.8553,
+    "max": 0.903
+   },
+   "global": {
+    "min": 0.8078,
+    "mediana": 0.8443,
+    "max": 0.8482
+   },
+   "sin_respuesta": {
+    "min": 0.8079,
+    "mediana": 0.85425,
+    "max": 0.877
+   },
+   "fuera_de_tema": {
+    "min": 0.7831,
+    "mediana": 0.7859,
+    "max": 0.7871
+   }
+  },
+  "k": 5
+ },
+ "rows": [
+  {
+   "id": "const-01",
+   "doc": "constitucion_argentina.pdf",
+   "category": "referencia",
+   "mode": "solo",
+   "question": "¿Qué dice el artículo 14?",
+   "search_query": "¿Qué dice el artículo 14?",
+   "top_score": 0.8591,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 14,
+     "score": 0.8591
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 11,
+     "score": 0.8523
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 12,
+     "score": 0.8351
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 15,
+     "score": 0.8343
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 12,
+     "score": 0.8336
+    }
+   ],
+   "page_rank": 2,
+   "chunk_rank": null
+  },
+  {
+   "id": "const-01",
+   "doc": "constitucion_argentina.pdf",
+   "category": "referencia",
+   "mode": "todos",
+   "question": "¿Qué dice el artículo 14?",
+   "search_query": "¿Qué dice el artículo 14?",
+   "top_score": 0.8591,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 14,
+     "score": 0.8591
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 11,
+     "score": 0.8523
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.8448
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 4,
+     "score": 0.8437
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 5,
+     "score": 0.8415
+    }
+   ],
+   "page_rank": 2,
+   "chunk_rank": null
+  },
+  {
+   "id": "const-02",
+   "doc": "constitucion_argentina.pdf",
+   "category": "referencia",
+   "mode": "solo",
+   "question": "¿Qué establece el artículo 14 bis?",
+   "search_query": "¿Qué establece el artículo 14 bis?",
+   "top_score": 0.8692,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 11,
+     "score": 0.8692
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 14,
+     "score": 0.8408
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 12,
+     "score": 0.8271
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 12,
+     "score": 0.8265
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 18,
+     "score": 0.8224
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-02",
+   "doc": "constitucion_argentina.pdf",
+   "category": "referencia",
+   "mode": "todos",
+   "question": "¿Qué establece el artículo 14 bis?",
+   "search_query": "¿Qué establece el artículo 14 bis?",
+   "top_score": 0.8692,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 11,
+     "score": 0.8692
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 14,
+     "score": 0.8408
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 12,
+     "score": 0.8271
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 12,
+     "score": 0.8265
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 4,
+     "score": 0.8252
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-03",
+   "doc": "constitucion_argentina.pdf",
+   "category": "referencia",
+   "mode": "solo",
+   "question": "¿Qué dice el artículo 18?",
+   "search_query": "¿Qué dice el artículo 18?",
+   "top_score": 0.856,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 28,
+     "score": 0.856
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 12,
+     "score": 0.8411
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 18,
+     "score": 0.8344
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 40,
+     "score": 0.833
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 12,
+     "score": 0.8329
+    }
+   ],
+   "page_rank": 2,
+   "chunk_rank": 5
+  },
+  {
+   "id": "const-03",
+   "doc": "constitucion_argentina.pdf",
+   "category": "referencia",
+   "mode": "todos",
+   "question": "¿Qué dice el artículo 18?",
+   "search_query": "¿Qué dice el artículo 18?",
+   "top_score": 0.856,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 28,
+     "score": 0.856
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 12,
+     "score": 0.8411
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 6,
+     "score": 0.8387
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 5,
+     "score": 0.836
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 18,
+     "score": 0.8344
+    }
+   ],
+   "page_rank": 2,
+   "chunk_rank": null
+  },
+  {
+   "id": "const-04",
+   "doc": "constitucion_argentina.pdf",
+   "category": "referencia",
+   "mode": "solo",
+   "question": "¿Qué artículo dice que el pueblo no delibera ni gobierna sino por medio de sus representantes?",
+   "search_query": "¿Qué artículo dice que el pueblo no delibera ni gobierna sino por medio de sus representantes?",
+   "top_score": 0.859,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 14,
+     "score": 0.859
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 15,
+     "score": 0.8531
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 34,
+     "score": 0.8493
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 18,
+     "score": 0.8422
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 17,
+     "score": 0.8358
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-04",
+   "doc": "constitucion_argentina.pdf",
+   "category": "referencia",
+   "mode": "todos",
+   "question": "¿Qué artículo dice que el pueblo no delibera ni gobierna sino por medio de sus representantes?",
+   "search_query": "¿Qué artículo dice que el pueblo no delibera ni gobierna sino por medio de sus representantes?",
+   "top_score": 0.859,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 14,
+     "score": 0.859
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 15,
+     "score": 0.8531
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 34,
+     "score": 0.8493
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 18,
+     "score": 0.8422
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 6,
+     "score": 0.8412
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-05",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Cuántos años dura el mandato del presidente?",
+   "search_query": "¿Cuántos años dura el mandato del presidente?",
+   "top_score": 0.8647,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 52,
+     "score": 0.8647
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 36,
+     "score": 0.8605
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 36,
+     "score": 0.8549
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 22,
+     "score": 0.8515
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 35,
+     "score": 0.8469
+    }
+   ],
+   "page_rank": 5,
+   "chunk_rank": 5
+  },
+  {
+   "id": "const-05",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Cuántos años dura el mandato del presidente?",
+   "search_query": "¿Cuántos años dura el mandato del presidente?",
+   "top_score": 0.8647,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 52,
+     "score": 0.8647
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 36,
+     "score": 0.8605
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 36,
+     "score": 0.8549
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 22,
+     "score": 0.8515
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 35,
+     "score": 0.8469
+    }
+   ],
+   "page_rank": 5,
+   "chunk_rank": 5
+  },
+  {
+   "id": "const-06",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Qué edad hay que tener para ser senador?",
+   "search_query": "¿Qué edad hay que tener para ser senador?",
+   "top_score": 0.8823,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 22,
+     "score": 0.8823
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 50,
+     "score": 0.8555
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 38,
+     "score": 0.8518
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 22,
+     "score": 0.8498
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 21,
+     "score": 0.8477
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-06",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Qué edad hay que tener para ser senador?",
+   "search_query": "¿Qué edad hay que tener para ser senador?",
+   "top_score": 0.8823,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 22,
+     "score": 0.8823
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 50,
+     "score": 0.8555
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 38,
+     "score": 0.8518
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 22,
+     "score": 0.8498
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 21,
+     "score": 0.8477
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-07",
+   "doc": "constitucion_argentina.pdf",
+   "category": "seguimiento",
+   "mode": "solo",
+   "question": "¿Y para ser diputado?",
+   "search_query": "¿Y para ser diputado?",
+   "top_score": 0.8623,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 21,
+     "score": 0.8623
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 21,
+     "score": 0.8499
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 6,
+     "score": 0.847
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 43,
+     "score": 0.8446
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 24,
+     "score": 0.8429
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-07",
+   "doc": "constitucion_argentina.pdf",
+   "category": "seguimiento",
+   "mode": "todos",
+   "question": "¿Y para ser diputado?",
+   "search_query": "¿Y para ser diputado?",
+   "top_score": 0.8623,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 21,
+     "score": 0.8623
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 21,
+     "score": 0.8499
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 6,
+     "score": 0.847
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 43,
+     "score": 0.8446
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 24,
+     "score": 0.8429
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-08",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Quién es el comandante en jefe de las fuerzas armadas?",
+   "search_query": "¿Quién es el comandante en jefe de las fuerzas armadas?",
+   "top_score": 0.854,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 39,
+     "score": 0.854
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 39,
+     "score": 0.8206
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 52,
+     "score": 0.8203
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 42,
+     "score": 0.8137
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 40,
+     "score": 0.81
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-08",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Quién es el comandante en jefe de las fuerzas armadas?",
+   "search_query": "¿Quién es el comandante en jefe de las fuerzas armadas?",
+   "top_score": 0.854,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 39,
+     "score": 0.854
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 39,
+     "score": 0.8206
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 52,
+     "score": 0.8203
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 42,
+     "score": 0.8137
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 40,
+     "score": 0.81
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-09",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Cómo se reforma la Constitución?",
+   "search_query": "¿Cómo se reforma la Constitución?",
+   "top_score": 0.8642,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 15,
+     "score": 0.8642
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 53,
+     "score": 0.8606
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 5,
+     "score": 0.8554
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 52,
+     "score": 0.8532
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 39,
+     "score": 0.85
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-09",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Cómo se reforma la Constitución?",
+   "search_query": "¿Cómo se reforma la Constitución?",
+   "top_score": 0.8642,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 15,
+     "score": 0.8642
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 53,
+     "score": 0.8606
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 5,
+     "score": 0.8554
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 52,
+     "score": 0.8532
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 39,
+     "score": 0.85
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-10",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Qué forma de gobierno adopta la Nación Argentina?",
+   "search_query": "¿Qué forma de gobierno adopta la Nación Argentina?",
+   "top_score": 0.8525,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 9,
+     "score": 0.8525
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 20,
+     "score": 0.8483
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 49,
+     "score": 0.8477
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 7,
+     "score": 0.8456
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 9,
+     "score": 0.8438
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-10",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Qué forma de gobierno adopta la Nación Argentina?",
+   "search_query": "¿Qué forma de gobierno adopta la Nación Argentina?",
+   "top_score": 0.8525,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 9,
+     "score": 0.8525
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 20,
+     "score": 0.8483
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 49,
+     "score": 0.8477
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 7,
+     "score": 0.8456
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 9,
+     "score": 0.8438
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-11",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Cuánto duran los senadores en su cargo?",
+   "search_query": "¿Cuánto duran los senadores en su cargo?",
+   "top_score": 0.873,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 22,
+     "score": 0.873
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 22,
+     "score": 0.873
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 50,
+     "score": 0.8687
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 49,
+     "score": 0.8657
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 24,
+     "score": 0.8539
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-11",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Cuánto duran los senadores en su cargo?",
+   "search_query": "¿Cuánto duran los senadores en su cargo?",
+   "top_score": 0.873,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 22,
+     "score": 0.873
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 22,
+     "score": 0.873
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 50,
+     "score": 0.8687
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 49,
+     "score": 0.8657
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 24,
+     "score": 0.8539
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-12",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Qué requisitos hay que cumplir para ser juez de la Corte Suprema?",
+   "search_query": "¿Qué requisitos hay que cumplir para ser juez de la Corte Suprema?",
+   "top_score": 0.8769,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 44,
+     "score": 0.8769
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 38,
+     "score": 0.8584
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 43,
+     "score": 0.8574
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 53,
+     "score": 0.8453
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 38,
+     "score": 0.8427
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-12",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Qué requisitos hay que cumplir para ser juez de la Corte Suprema?",
+   "search_query": "¿Qué requisitos hay que cumplir para ser juez de la Corte Suprema?",
+   "top_score": 0.8769,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 44,
+     "score": 0.8769
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 38,
+     "score": 0.8584
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 43,
+     "score": 0.8574
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 53,
+     "score": 0.8453
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 38,
+     "score": 0.8427
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-13",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Qué es la acción de amparo?",
+   "search_query": "¿Qué es la acción de amparo?",
+   "top_score": 0.8683,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 19,
+     "score": 0.8683
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 45,
+     "score": 0.8305
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 19,
+     "score": 0.8289
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 19,
+     "score": 0.8242
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 21,
+     "score": 0.8217
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 3
+  },
+  {
+   "id": "const-13",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Qué es la acción de amparo?",
+   "search_query": "¿Qué es la acción de amparo?",
+   "top_score": 0.8683,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 19,
+     "score": 0.8683
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 45,
+     "score": 0.8305
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 19,
+     "score": 0.8289
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.8259
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 19,
+     "score": 0.8242
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 3
+  },
+  {
+   "id": "const-14",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Qué dice la Constitución sobre el medio ambiente?",
+   "search_query": "¿Qué dice la Constitución sobre el medio ambiente?",
+   "top_score": 0.8433,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 18,
+     "score": 0.8433
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 18,
+     "score": 0.8388
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 2,
+     "score": 0.8308
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 19,
+     "score": 0.8294
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 14,
+     "score": 0.8278
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 2
+  },
+  {
+   "id": "const-14",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Qué dice la Constitución sobre el medio ambiente?",
+   "search_query": "¿Qué dice la Constitución sobre el medio ambiente?",
+   "top_score": 0.8433,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 18,
+     "score": 0.8433
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 18,
+     "score": 0.8388
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 2,
+     "score": 0.8308
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 19,
+     "score": 0.8294
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 14,
+     "score": 0.8278
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 2
+  },
+  {
+   "id": "const-15",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Qué régimen de gobierno tiene la ciudad de Buenos Aires?",
+   "search_query": "¿Qué régimen de gobierno tiene la ciudad de Buenos Aires?",
+   "top_score": 0.8737,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 47,
+     "score": 0.8737
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 49,
+     "score": 0.8732
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 53,
+     "score": 0.8544
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 51,
+     "score": 0.8496
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 25,
+     "score": 0.8475
+    }
+   ],
+   "page_rank": 2,
+   "chunk_rank": 2
+  },
+  {
+   "id": "const-15",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Qué régimen de gobierno tiene la ciudad de Buenos Aires?",
+   "search_query": "¿Qué régimen de gobierno tiene la ciudad de Buenos Aires?",
+   "top_score": 0.8737,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 47,
+     "score": 0.8737
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 49,
+     "score": 0.8732
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 53,
+     "score": 0.8544
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 51,
+     "score": 0.8496
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 25,
+     "score": 0.8475
+    }
+   ],
+   "page_rank": 2,
+   "chunk_rank": 2
+  },
+  {
+   "id": "const-16",
+   "doc": "constitucion_argentina.pdf",
+   "category": "numero",
+   "mode": "solo",
+   "question": "¿Cuántos habitantes representa cada diputado?",
+   "search_query": "¿Cuántos habitantes representa cada diputado?",
+   "top_score": 0.879,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 20,
+     "score": 0.879
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 21,
+     "score": 0.8518
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 20,
+     "score": 0.8364
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 21,
+     "score": 0.8299
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 17,
+     "score": 0.8266
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-16",
+   "doc": "constitucion_argentina.pdf",
+   "category": "numero",
+   "mode": "todos",
+   "question": "¿Cuántos habitantes representa cada diputado?",
+   "search_query": "¿Cuántos habitantes representa cada diputado?",
+   "top_score": 0.879,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 20,
+     "score": 0.879
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 21,
+     "score": 0.8518
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 20,
+     "score": 0.8364
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 21,
+     "score": 0.8299
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 17,
+     "score": 0.8266
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-17",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Qué culto sostiene el Gobierno federal?",
+   "search_query": "¿Qué culto sostiene el Gobierno federal?",
+   "top_score": 0.839,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 9,
+     "score": 0.839
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 9,
+     "score": 0.8327
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 10,
+     "score": 0.8182
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 58,
+     "score": 0.815
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 6,
+     "score": 0.8108
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-17",
+   "doc": "constitucion_argentina.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Qué culto sostiene el Gobierno federal?",
+   "search_query": "¿Qué culto sostiene el Gobierno federal?",
+   "top_score": 0.839,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 9,
+     "score": 0.839
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 9,
+     "score": 0.8327
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 10,
+     "score": 0.8182
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 58,
+     "score": 0.815
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 6,
+     "score": 0.8108
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "const-18",
+   "doc": "constitucion_argentina.pdf",
+   "category": "global",
+   "mode": "solo",
+   "question": "¿De qué trata este documento?",
+   "search_query": "¿De qué trata este documento?",
+   "top_score": 0.8443,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 2,
+     "score": 0.8443
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 29,
+     "score": 0.8388
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 30,
+     "score": 0.835
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 9,
+     "score": 0.8305
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 18,
+     "score": 0.8279
+    }
+   ]
+  },
+  {
+   "id": "const-18",
+   "doc": "constitucion_argentina.pdf",
+   "category": "global",
+   "mode": "todos",
+   "question": "¿De qué trata este documento?",
+   "search_query": "¿De qué trata este documento?",
+   "top_score": 0.8443,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 2,
+     "score": 0.8443
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.8403
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 29,
+     "score": 0.8388
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 7,
+     "score": 0.8366
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 30,
+     "score": 0.835
+    }
+   ]
+  },
+  {
+   "id": "const-19",
+   "doc": "constitucion_argentina.pdf",
+   "category": "sin_respuesta",
+   "mode": "solo",
+   "question": "¿Cuántos habitantes tiene la Argentina?",
+   "search_query": "¿Cuántos habitantes tiene la Argentina?",
+   "top_score": 0.847,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 12,
+     "score": 0.847
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 20,
+     "score": 0.8412
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 12,
+     "score": 0.8373
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 20,
+     "score": 0.8351
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 3,
+     "score": 0.8343
+    }
+   ]
+  },
+  {
+   "id": "const-19",
+   "doc": "constitucion_argentina.pdf",
+   "category": "sin_respuesta",
+   "mode": "todos",
+   "question": "¿Cuántos habitantes tiene la Argentina?",
+   "search_query": "¿Cuántos habitantes tiene la Argentina?",
+   "top_score": 0.847,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 12,
+     "score": 0.847
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 20,
+     "score": 0.8412
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 17,
+     "score": 0.8394
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 12,
+     "score": 0.8373
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 20,
+     "score": 0.8351
+    }
+   ]
+  },
+  {
+   "id": "const-20",
+   "doc": "constitucion_argentina.pdf",
+   "category": "fuera_de_tema",
+   "mode": "solo",
+   "question": "¿Cuál es la capital de Francia?",
+   "search_query": "¿Cuál es la capital de Francia?",
+   "top_score": 0.7871,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 9,
+     "score": 0.7871
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 47,
+     "score": 0.7777
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 49,
+     "score": 0.7776
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 51,
+     "score": 0.7772
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 31,
+     "score": 0.769
+    }
+   ]
+  },
+  {
+   "id": "const-20",
+   "doc": "constitucion_argentina.pdf",
+   "category": "fuera_de_tema",
+   "mode": "todos",
+   "question": "¿Cuál es la capital de Francia?",
+   "search_query": "¿Cuál es la capital de Francia?",
+   "top_score": 0.7871,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 9,
+     "score": 0.7871
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 47,
+     "score": 0.7777
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 49,
+     "score": 0.7776
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 51,
+     "score": 0.7772
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 11,
+     "score": 0.7722
+    }
+   ]
+  },
+  {
+   "id": "ddhh-01",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Qué dice sobre la tortura?",
+   "search_query": "¿Qué dice sobre la tortura?",
+   "top_score": 0.8362,
+   "sources": [
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.8362
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.8186
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 1,
+     "score": 0.8049
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 9,
+     "score": 0.8011
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 9,
+     "score": 0.8008
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "ddhh-01",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Qué dice sobre la tortura?",
+   "search_query": "¿Qué dice sobre la tortura?",
+   "top_score": 0.8362,
+   "sources": [
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.8362
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 29,
+     "score": 0.829
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.8186
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 10,
+     "score": 0.8128
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 1,
+     "score": 0.8049
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "ddhh-02",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Toda persona tiene derecho a una nacionalidad?",
+   "search_query": "¿Toda persona tiene derecho a una nacionalidad?",
+   "top_score": 0.8778,
+   "sources": [
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 5,
+     "score": 0.8778
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 4,
+     "score": 0.8614
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.8599
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 2,
+     "score": 0.8586
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.8585
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "ddhh-02",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Toda persona tiene derecho a una nacionalidad?",
+   "search_query": "¿Toda persona tiene derecho a una nacionalidad?",
+   "top_score": 0.8778,
+   "sources": [
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 5,
+     "score": 0.8778
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 4,
+     "score": 0.8614
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.8599
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 2,
+     "score": 0.8586
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.8585
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "ddhh-03",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿La educación tiene que ser gratuita?",
+   "search_query": "¿La educación tiene que ser gratuita?",
+   "top_score": 0.8841,
+   "sources": [
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 8,
+     "score": 0.8841
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 8,
+     "score": 0.8325
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 2,
+     "score": 0.8114
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 6,
+     "score": 0.8079
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 2,
+     "score": 0.805
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "ddhh-03",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿La educación tiene que ser gratuita?",
+   "search_query": "¿La educación tiene que ser gratuita?",
+   "top_score": 0.8841,
+   "sources": [
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 8,
+     "score": 0.8841
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 8,
+     "score": 0.8325
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 6,
+     "score": 0.8237
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 28,
+     "score": 0.8194
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 14,
+     "score": 0.8183
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "ddhh-04",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "referencia",
+   "mode": "solo",
+   "question": "¿Qué dice el artículo 14?",
+   "search_query": "¿Qué dice el artículo 14?",
+   "top_score": 0.8448,
+   "sources": [
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.8448
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 4,
+     "score": 0.8437
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 5,
+     "score": 0.8415
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 6,
+     "score": 0.8358
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 7,
+     "score": 0.8344
+    }
+   ],
+   "page_rank": 2,
+   "chunk_rank": 2
+  },
+  {
+   "id": "ddhh-04",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "referencia",
+   "mode": "todos",
+   "question": "¿Qué dice el artículo 14?",
+   "search_query": "¿Qué dice el artículo 14?",
+   "top_score": 0.8591,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 14,
+     "score": 0.8591
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 11,
+     "score": 0.8523
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.8448
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 4,
+     "score": 0.8437
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 5,
+     "score": 0.8415
+    }
+   ],
+   "page_rank": 4,
+   "chunk_rank": 4
+  },
+  {
+   "id": "ddhh-05",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "referencia",
+   "mode": "solo",
+   "question": "¿Qué establece el artículo 3?",
+   "search_query": "¿Qué establece el artículo 3?",
+   "top_score": 0.839,
+   "sources": [
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 2,
+     "score": 0.839
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 9,
+     "score": 0.8349
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 7,
+     "score": 0.8323
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.8319
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 8,
+     "score": 0.8309
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "ddhh-05",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "referencia",
+   "mode": "todos",
+   "question": "¿Qué establece el artículo 3?",
+   "search_query": "¿Qué establece el artículo 3?",
+   "top_score": 0.8497,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 49,
+     "score": 0.8497
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 2,
+     "score": 0.839
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 43,
+     "score": 0.8385
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 9,
+     "score": 0.8349
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 49,
+     "score": 0.8334
+    }
+   ],
+   "page_rank": 2,
+   "chunk_rank": 2
+  },
+  {
+   "id": "ddhh-06",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Cuándo fue adoptada la Declaración?",
+   "search_query": "¿Cuándo fue adoptada la Declaración?",
+   "top_score": 0.8605,
+   "sources": [
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 1,
+     "score": 0.8605
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 2,
+     "score": 0.8322
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 8,
+     "score": 0.8195
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.8109
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 9,
+     "score": 0.8083
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "ddhh-06",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Cuándo fue adoptada la Declaración?",
+   "search_query": "¿Cuándo fue adoptada la Declaración?",
+   "top_score": 0.8605,
+   "sources": [
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 1,
+     "score": 0.8605
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 2,
+     "score": 0.8322
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 8,
+     "score": 0.8195
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.8109
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 7,
+     "score": 0.8101
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "ddhh-07",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Qué dice sobre las vacaciones?",
+   "search_query": "¿Qué dice sobre las vacaciones?",
+   "top_score": 0.8275,
+   "sources": [
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 7,
+     "score": 0.8275
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 8,
+     "score": 0.7946
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 7,
+     "score": 0.7937
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 5,
+     "score": 0.7932
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 8,
+     "score": 0.7881
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "ddhh-07",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Qué dice sobre las vacaciones?",
+   "search_query": "¿Qué dice sobre las vacaciones?",
+   "top_score": 0.8275,
+   "sources": [
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 7,
+     "score": 0.8275
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 14,
+     "score": 0.8245
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 9,
+     "score": 0.8133
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 15,
+     "score": 0.8114
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 15,
+     "score": 0.8097
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "ddhh-08",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Alguien puede ser obligado a pertenecer a una asociación?",
+   "search_query": "¿Alguien puede ser obligado a pertenecer a una asociación?",
+   "top_score": 0.8462,
+   "sources": [
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 6,
+     "score": 0.8462
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 2,
+     "score": 0.8362
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 9,
+     "score": 0.8291
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 2,
+     "score": 0.8234
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 8,
+     "score": 0.8218
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "ddhh-08",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Alguien puede ser obligado a pertenecer a una asociación?",
+   "search_query": "¿Alguien puede ser obligado a pertenecer a una asociación?",
+   "top_score": 0.8462,
+   "sources": [
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 6,
+     "score": 0.8462
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 2,
+     "score": 0.8362
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 9,
+     "score": 0.8291
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 24,
+     "score": 0.824
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 2,
+     "score": 0.8234
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "ddhh-09",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "seguimiento",
+   "mode": "solo",
+   "question": "¿Y qué dice sobre el salario?",
+   "search_query": "¿Y qué dice sobre el salario?",
+   "top_score": 0.8269,
+   "sources": [
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 7,
+     "score": 0.8269
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 7,
+     "score": 0.8106
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.8047
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 8,
+     "score": 0.8013
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 8,
+     "score": 0.7992
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "ddhh-09",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "seguimiento",
+   "mode": "todos",
+   "question": "¿Y qué dice sobre el salario?",
+   "search_query": "¿Y qué dice sobre el salario?",
+   "top_score": 0.8324,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 14,
+     "score": 0.8324
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 7,
+     "score": 0.8269
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 14,
+     "score": 0.8261
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 36,
+     "score": 0.8222
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 43,
+     "score": 0.8215
+    }
+   ],
+   "page_rank": 2,
+   "chunk_rank": 2
+  },
+  {
+   "id": "ddhh-10",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "sin_respuesta",
+   "mode": "solo",
+   "question": "¿Qué sanciones reciben los países que violan la Declaración?",
+   "search_query": "¿Qué sanciones reciben los países que violan la Declaración?",
+   "top_score": 0.8292,
+   "sources": [
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 2,
+     "score": 0.8292
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.824
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 8,
+     "score": 0.8162
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 9,
+     "score": 0.8144
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 5,
+     "score": 0.8057
+    }
+   ]
+  },
+  {
+   "id": "ddhh-10",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "sin_respuesta",
+   "mode": "todos",
+   "question": "¿Qué sanciones reciben los países que violan la Declaración?",
+   "search_query": "¿Qué sanciones reciben los países que violan la Declaración?",
+   "top_score": 0.8364,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 29,
+     "score": 0.8364
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 2,
+     "score": 0.8292
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 33,
+     "score": 0.8277
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 30,
+     "score": 0.8267
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.824
+    }
+   ]
+  },
+  {
+   "id": "ddhh-11",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "global",
+   "mode": "solo",
+   "question": "Resumí el documento",
+   "search_query": "Resumí el documento",
+   "top_score": 0.8482,
+   "sources": [
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 7,
+     "score": 0.8482
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 8,
+     "score": 0.8414
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 5,
+     "score": 0.8354
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 1,
+     "score": 0.8333
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 8,
+     "score": 0.8307
+    }
+   ]
+  },
+  {
+   "id": "ddhh-11",
+   "doc": "declaracion_derechos_humanos.pdf",
+   "category": "global",
+   "mode": "todos",
+   "question": "Resumí el documento",
+   "search_query": "Resumí el documento",
+   "top_score": 0.8613,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 2,
+     "score": 0.8613
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 14,
+     "score": 0.8502
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 15,
+     "score": 0.8495
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 7,
+     "score": 0.8482
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 28,
+     "score": 0.8476
+    }
+   ]
+  },
+  {
+   "id": "jara-01",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Dónde nació Víctor Jara?",
+   "search_query": "¿Dónde nació Víctor Jara?",
+   "top_score": 0.8945,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8945
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8775
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8771
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8723
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 7,
+     "score": 0.8508
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 3
+  },
+  {
+   "id": "jara-01",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Dónde nació Víctor Jara?",
+   "search_query": "¿Dónde nació Víctor Jara?",
+   "top_score": 0.8945,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8945
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8775
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8771
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8723
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 7,
+     "score": 0.8508
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 3
+  },
+  {
+   "id": "jara-02",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "seguimiento",
+   "mode": "solo",
+   "question": "¿Y cuándo murió?",
+   "search_query": "¿Y cuándo murió?",
+   "top_score": 0.8449,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 10,
+     "score": 0.8449
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 10,
+     "score": 0.838
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 7,
+     "score": 0.8379
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8377
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8374
+    }
+   ],
+   "page_rank": 4,
+   "chunk_rank": null
+  },
+  {
+   "id": "jara-02",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "seguimiento",
+   "mode": "todos",
+   "question": "¿Y cuándo murió?",
+   "search_query": "¿Y cuándo murió?",
+   "top_score": 0.8449,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 10,
+     "score": 0.8449
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 10,
+     "score": 0.838
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 7,
+     "score": 0.8379
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8377
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8374
+    }
+   ],
+   "page_rank": 4,
+   "chunk_rank": null
+  },
+  {
+   "id": "jara-03",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Con quién se casó?",
+   "search_query": "¿Con quién se casó?",
+   "top_score": 0.8206,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 2,
+     "score": 0.8206
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 9,
+     "score": 0.8135
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 2,
+     "score": 0.8094
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8082
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 10,
+     "score": 0.808
+    }
+   ],
+   "page_rank": 4,
+   "chunk_rank": null
+  },
+  {
+   "id": "jara-03",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Con quién se casó?",
+   "search_query": "¿Con quién se casó?",
+   "top_score": 0.8206,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 2,
+     "score": 0.8206
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 9,
+     "score": 0.8135
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 2,
+     "score": 0.8094
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8082
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 10,
+     "score": 0.808
+    }
+   ],
+   "page_rank": 4,
+   "chunk_rank": null
+  },
+  {
+   "id": "jara-04",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Qué instrumento tocaba?",
+   "search_query": "¿Qué instrumento tocaba?",
+   "top_score": 0.829,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 7,
+     "score": 0.829
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 6,
+     "score": 0.8209
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8204
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8174
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8169
+    }
+   ],
+   "page_rank": null,
+   "chunk_rank": null
+  },
+  {
+   "id": "jara-04",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Qué instrumento tocaba?",
+   "search_query": "¿Qué instrumento tocaba?",
+   "top_score": 0.829,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 7,
+     "score": 0.829
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 6,
+     "score": 0.8209
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8204
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8174
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8169
+    }
+   ],
+   "page_rank": null,
+   "chunk_rank": null
+  },
+  {
+   "id": "jara-05",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "numero",
+   "mode": "solo",
+   "question": "¿Cuántos impactos de bala recibió?",
+   "search_query": "¿Cuántos impactos de bala recibió?",
+   "top_score": 0.8391,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8391
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 4,
+     "score": 0.8282
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 4,
+     "score": 0.8257
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 5,
+     "score": 0.8241
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 5,
+     "score": 0.8182
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "jara-05",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "numero",
+   "mode": "todos",
+   "question": "¿Cuántos impactos de bala recibió?",
+   "search_query": "¿Cuántos impactos de bala recibió?",
+   "top_score": 0.8391,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8391
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 4,
+     "score": 0.8282
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 4,
+     "score": 0.8257
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 5,
+     "score": 0.8241
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 5,
+     "score": 0.8182
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "jara-06",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Con qué canción ganó el primer festival de la Nueva Canción Chilena?",
+   "search_query": "¿Con qué canción ganó el primer festival de la Nueva Canción Chilena?",
+   "top_score": 0.829,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 8,
+     "score": 0.829
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8248
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8206
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 2,
+     "score": 0.8166
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8161
+    }
+   ],
+   "page_rank": 2,
+   "chunk_rank": 2
+  },
+  {
+   "id": "jara-06",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Con qué canción ganó el primer festival de la Nueva Canción Chilena?",
+   "search_query": "¿Con qué canción ganó el primer festival de la Nueva Canción Chilena?",
+   "top_score": 0.829,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 8,
+     "score": 0.829
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8248
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8206
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 2,
+     "score": 0.8166
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8161
+    }
+   ],
+   "page_rank": 2,
+   "chunk_rank": 2
+  },
+  {
+   "id": "jara-07",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Qué grupo dirigió entre 1966 y 1969?",
+   "search_query": "¿Qué grupo dirigió entre 1966 y 1969?",
+   "top_score": 0.8275,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 6,
+     "score": 0.8275
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8242
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 2,
+     "score": 0.8106
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 8,
+     "score": 0.8099
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 6,
+     "score": 0.8094
+    }
+   ],
+   "page_rank": 2,
+   "chunk_rank": 2
+  },
+  {
+   "id": "jara-07",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Qué grupo dirigió entre 1966 y 1969?",
+   "search_query": "¿Qué grupo dirigió entre 1966 y 1969?",
+   "top_score": 0.8275,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 6,
+     "score": 0.8275
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8242
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 2,
+     "score": 0.8106
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 8,
+     "score": 0.8099
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 6,
+     "score": 0.8094
+    }
+   ],
+   "page_rank": 2,
+   "chunk_rank": 2
+  },
+  {
+   "id": "jara-08",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "numero",
+   "mode": "solo",
+   "question": "¿Cuánto tuvo que pagar Barrientos según el jurado de Florida?",
+   "search_query": "¿Cuánto tuvo que pagar Barrientos según el jurado de Florida?",
+   "top_score": 0.8643,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 5,
+     "score": 0.8643
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 5,
+     "score": 0.8625
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 4,
+     "score": 0.8359
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 4,
+     "score": 0.8242
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 5,
+     "score": 0.8107
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "jara-08",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "numero",
+   "mode": "todos",
+   "question": "¿Cuánto tuvo que pagar Barrientos según el jurado de Florida?",
+   "search_query": "¿Cuánto tuvo que pagar Barrientos según el jurado de Florida?",
+   "top_score": 0.8643,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 5,
+     "score": 0.8643
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 5,
+     "score": 0.8625
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 4,
+     "score": 0.8359
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 4,
+     "score": 0.8242
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 5,
+     "score": 0.8107
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "jara-09",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Cuándo le pusieron su nombre al Estadio Chile?",
+   "search_query": "¿Cuándo le pusieron su nombre al Estadio Chile?",
+   "top_score": 0.8568,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 4,
+     "score": 0.8568
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 4,
+     "score": 0.847
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8413
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8405
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 9,
+     "score": 0.8348
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 2
+  },
+  {
+   "id": "jara-09",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Cuándo le pusieron su nombre al Estadio Chile?",
+   "search_query": "¿Cuándo le pusieron su nombre al Estadio Chile?",
+   "top_score": 0.8568,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 4,
+     "score": 0.8568
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 4,
+     "score": 0.847
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8413
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8405
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 9,
+     "score": 0.8348
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 2
+  },
+  {
+   "id": "jara-10",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Hay algún asteroide con su nombre?",
+   "search_query": "¿Hay algún asteroide con su nombre?",
+   "top_score": 0.8586,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 7,
+     "score": 0.8586
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 9,
+     "score": 0.8001
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 7,
+     "score": 0.7991
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 6,
+     "score": 0.7978
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 9,
+     "score": 0.7917
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "jara-10",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Hay algún asteroide con su nombre?",
+   "search_query": "¿Hay algún asteroide con su nombre?",
+   "top_score": 0.8586,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 7,
+     "score": 0.8586
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 9,
+     "score": 0.8001
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 7,
+     "score": 0.7991
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 6,
+     "score": 0.7978
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 9,
+     "score": 0.7917
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "jara-11",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Cuál fue su primer disco como solista?",
+   "search_query": "¿Cuál fue su primer disco como solista?",
+   "top_score": 0.8162,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8162
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 2,
+     "score": 0.8064
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.7984
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.7966
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.7963
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "jara-11",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Cuál fue su primer disco como solista?",
+   "search_query": "¿Cuál fue su primer disco como solista?",
+   "top_score": 0.8162,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8162
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 2,
+     "score": 0.8064
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.7984
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.7966
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.7963
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "jara-12",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "seguimiento",
+   "mode": "solo",
+   "question": "¿Y qué premio ganó con ese disco?",
+   "search_query": "¿Y qué premio ganó con ese disco?",
+   "top_score": 0.8276,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8276
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8235
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 7,
+     "score": 0.8178
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 6,
+     "score": 0.8159
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8147
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 5
+  },
+  {
+   "id": "jara-12",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "seguimiento",
+   "mode": "todos",
+   "question": "¿Y qué premio ganó con ese disco?",
+   "search_query": "¿Y qué premio ganó con ese disco?",
+   "top_score": 0.8276,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8276
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8235
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 7,
+     "score": 0.8178
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 6,
+     "score": 0.8159
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 3,
+     "score": 0.8147
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 5
+  },
+  {
+   "id": "jara-13",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "sin_respuesta",
+   "mode": "solo",
+   "question": "¿Cuántos discos vendió Víctor Jara en total?",
+   "search_query": "¿Cuántos discos vendió Víctor Jara en total?",
+   "top_score": 0.8615,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 7,
+     "score": 0.8615
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8564
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 8,
+     "score": 0.8543
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 8,
+     "score": 0.8541
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.852
+    }
+   ]
+  },
+  {
+   "id": "jara-13",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "sin_respuesta",
+   "mode": "todos",
+   "question": "¿Cuántos discos vendió Víctor Jara en total?",
+   "search_query": "¿Cuántos discos vendió Víctor Jara en total?",
+   "top_score": 0.8615,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 7,
+     "score": 0.8615
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8564
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 8,
+     "score": 0.8543
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 8,
+     "score": 0.8541
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 1,
+     "score": 0.852
+    }
+   ]
+  },
+  {
+   "id": "jara-14",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "fuera_de_tema",
+   "mode": "solo",
+   "question": "¿Cómo se prepara un asado?",
+   "search_query": "¿Cómo se prepara un asado?",
+   "top_score": 0.7831,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 9,
+     "score": 0.7831
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 11,
+     "score": 0.7776
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 2,
+     "score": 0.7769
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 10,
+     "score": 0.7736
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 5,
+     "score": 0.7718
+    }
+   ]
+  },
+  {
+   "id": "jara-14",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "fuera_de_tema",
+   "mode": "todos",
+   "question": "¿Cómo se prepara un asado?",
+   "search_query": "¿Cómo se prepara un asado?",
+   "top_score": 0.819,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 11,
+     "score": 0.819
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 12,
+     "score": 0.8145
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 12,
+     "score": 0.8077
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 12,
+     "score": 0.8071
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 42,
+     "score": 0.7997
+    }
+   ]
+  },
+  {
+   "id": "jara-15",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "global",
+   "mode": "solo",
+   "question": "¿Cuáles son los puntos principales del documento?",
+   "search_query": "¿Cuáles son los puntos principales del documento?",
+   "top_score": 0.8078,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 9,
+     "score": 0.8078
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 8,
+     "score": 0.8027
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 10,
+     "score": 0.8014
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 11,
+     "score": 0.8004
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 10,
+     "score": 0.7991
+    }
+   ]
+  },
+  {
+   "id": "jara-15",
+   "doc": "victor_jara_wikipedia.pdf",
+   "category": "global",
+   "mode": "todos",
+   "question": "¿Cuáles son los puntos principales del documento?",
+   "search_query": "¿Cuáles son los puntos principales del documento?",
+   "top_score": 0.8385,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 27,
+     "score": 0.8385
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 30,
+     "score": 0.8338
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 29,
+     "score": 0.8332
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 29,
+     "score": 0.8318
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 3,
+     "score": 0.8308
+    }
+   ]
+  },
+  {
+   "id": "indec-01",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "numero",
+   "mode": "solo",
+   "question": "¿Cuánto fue la inflación mensual de octubre de 2024?",
+   "search_query": "¿Cuánto fue la inflación mensual de octubre de 2024?",
+   "top_score": 0.903,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.903
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 4,
+     "score": 0.9
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.8864
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 15,
+     "score": 0.8812
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 6,
+     "score": 0.8792
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "indec-01",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "numero",
+   "mode": "todos",
+   "question": "¿Cuánto fue la inflación mensual de octubre de 2024?",
+   "search_query": "¿Cuánto fue la inflación mensual de octubre de 2024?",
+   "top_score": 0.903,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.903
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 4,
+     "score": 0.9
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.8864
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 15,
+     "score": 0.8812
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 6,
+     "score": 0.8792
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "indec-02",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "numero",
+   "mode": "solo",
+   "question": "¿Cuál fue la variación interanual del IPC?",
+   "search_query": "¿Cuál fue la variación interanual del IPC?",
+   "top_score": 0.858,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 5,
+     "score": 0.858
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 7,
+     "score": 0.8468
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 4,
+     "score": 0.8432
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 17,
+     "score": 0.8404
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 4,
+     "score": 0.84
+    }
+   ],
+   "page_rank": null,
+   "chunk_rank": null
+  },
+  {
+   "id": "indec-02",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "numero",
+   "mode": "todos",
+   "question": "¿Cuál fue la variación interanual del IPC?",
+   "search_query": "¿Cuál fue la variación interanual del IPC?",
+   "top_score": 0.858,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 5,
+     "score": 0.858
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 7,
+     "score": 0.8468
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 4,
+     "score": 0.8432
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 17,
+     "score": 0.8404
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 4,
+     "score": 0.84
+    }
+   ],
+   "page_rank": null,
+   "chunk_rank": null
+  },
+  {
+   "id": "indec-03",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "seguimiento",
+   "mode": "solo",
+   "question": "¿Y cuánto acumuló en el año?",
+   "search_query": "¿Y cuánto acumuló en el año?",
+   "top_score": 0.8548,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 14,
+     "score": 0.8548
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 16,
+     "score": 0.8492
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 8,
+     "score": 0.847
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 15,
+     "score": 0.8469
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 14,
+     "score": 0.8462
+    }
+   ],
+   "page_rank": null,
+   "chunk_rank": null
+  },
+  {
+   "id": "indec-03",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "seguimiento",
+   "mode": "todos",
+   "question": "¿Y cuánto acumuló en el año?",
+   "search_query": "¿Y cuánto acumuló en el año?",
+   "top_score": 0.8548,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 14,
+     "score": 0.8548
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 16,
+     "score": 0.8492
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 8,
+     "score": 0.847
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 15,
+     "score": 0.8469
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 14,
+     "score": 0.8462
+    }
+   ],
+   "page_rank": null,
+   "chunk_rank": null
+  },
+  {
+   "id": "indec-04",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Qué división tuvo el mayor aumento en el mes?",
+   "search_query": "¿Qué división tuvo el mayor aumento en el mes?",
+   "top_score": 0.8683,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.8683
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.8395
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 6,
+     "score": 0.833
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 6,
+     "score": 0.8262
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.8262
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "indec-04",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Qué división tuvo el mayor aumento en el mes?",
+   "search_query": "¿Qué división tuvo el mayor aumento en el mes?",
+   "top_score": 0.8683,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.8683
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.8395
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 6,
+     "score": 0.833
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 6,
+     "score": 0.8262
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.8262
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "indec-05",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Qué divisiones aumentaron menos?",
+   "search_query": "¿Qué divisiones aumentaron menos?",
+   "top_score": 0.819,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.819
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 7,
+     "score": 0.8145
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.8124
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 18,
+     "score": 0.8111
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 17,
+     "score": 0.811
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "indec-05",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Qué divisiones aumentaron menos?",
+   "search_query": "¿Qué divisiones aumentaron menos?",
+   "top_score": 0.819,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.819
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 7,
+     "score": 0.8145
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.8124
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 18,
+     "score": 0.8111
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 17,
+     "score": 0.811
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "indec-06",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "numero",
+   "mode": "solo",
+   "question": "¿Cuánto costaba el kilo de pan francés en el GBA en octubre?",
+   "search_query": "¿Cuánto costaba el kilo de pan francés en el GBA en octubre?",
+   "top_score": 0.8553,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 11,
+     "score": 0.8553
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 12,
+     "score": 0.8544
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.8449
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 5,
+     "score": 0.8382
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 6,
+     "score": 0.8381
+    }
+   ],
+   "page_rank": 2,
+   "chunk_rank": 2
+  },
+  {
+   "id": "indec-06",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "numero",
+   "mode": "todos",
+   "question": "¿Cuánto costaba el kilo de pan francés en el GBA en octubre?",
+   "search_query": "¿Cuánto costaba el kilo de pan francés en el GBA en octubre?",
+   "top_score": 0.8553,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 11,
+     "score": 0.8553
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 12,
+     "score": 0.8544
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.8449
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 5,
+     "score": 0.8382
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 6,
+     "score": 0.8381
+    }
+   ],
+   "page_rank": 2,
+   "chunk_rank": 2
+  },
+  {
+   "id": "indec-07",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "numero",
+   "mode": "solo",
+   "question": "¿Cuántos precios se relevan por mes?",
+   "search_query": "¿Cuántos precios se relevan por mes?",
+   "top_score": 0.889,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 18,
+     "score": 0.889
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 14,
+     "score": 0.8716
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 8,
+     "score": 0.8687
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 14,
+     "score": 0.8673
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 6,
+     "score": 0.8662
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "indec-07",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "numero",
+   "mode": "todos",
+   "question": "¿Cuántos precios se relevan por mes?",
+   "search_query": "¿Cuántos precios se relevan por mes?",
+   "top_score": 0.889,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 18,
+     "score": 0.889
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 14,
+     "score": 0.8716
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 8,
+     "score": 0.8687
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 14,
+     "score": 0.8673
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 6,
+     "score": 0.8662
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "indec-08",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "numero",
+   "mode": "solo",
+   "question": "¿En cuántos aglomerados urbanos se relevan los precios?",
+   "search_query": "¿En cuántos aglomerados urbanos se relevan los precios?",
+   "top_score": 0.8622,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 17,
+     "score": 0.8622
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 18,
+     "score": 0.8452
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 17,
+     "score": 0.8357
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 5,
+     "score": 0.8329
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 7,
+     "score": 0.8315
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "indec-08",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "numero",
+   "mode": "todos",
+   "question": "¿En cuántos aglomerados urbanos se relevan los precios?",
+   "search_query": "¿En cuántos aglomerados urbanos se relevan los precios?",
+   "top_score": 0.8622,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 17,
+     "score": 0.8622
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 18,
+     "score": 0.8452
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 17,
+     "score": 0.8357
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 5,
+     "score": 0.8329
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 7,
+     "score": 0.8315
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "indec-09",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿Qué categoría lideró el incremento?",
+   "search_query": "¿Qué categoría lideró el incremento?",
+   "top_score": 0.8447,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.8447
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.8415
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 10,
+     "score": 0.8361
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 8,
+     "score": 0.8311
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 7,
+     "score": 0.8304
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "indec-09",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿Qué categoría lideró el incremento?",
+   "search_query": "¿Qué categoría lideró el incremento?",
+   "top_score": 0.8447,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.8447
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.8415
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 10,
+     "score": 0.8361
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 8,
+     "score": 0.8311
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 7,
+     "score": 0.8304
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "indec-10",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "dato",
+   "mode": "solo",
+   "question": "¿En qué encuesta se basan las ponderaciones de la canasta?",
+   "search_query": "¿En qué encuesta se basan las ponderaciones de la canasta?",
+   "top_score": 0.8689,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 17,
+     "score": 0.8689
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 17,
+     "score": 0.8475
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 18,
+     "score": 0.8312
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 9,
+     "score": 0.8289
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 2,
+     "score": 0.8258
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "indec-10",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "dato",
+   "mode": "todos",
+   "question": "¿En qué encuesta se basan las ponderaciones de la canasta?",
+   "search_query": "¿En qué encuesta se basan las ponderaciones de la canasta?",
+   "top_score": 0.8689,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 17,
+     "score": 0.8689
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 17,
+     "score": 0.8475
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 18,
+     "score": 0.8312
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 9,
+     "score": 0.8289
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 2,
+     "score": 0.8258
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "indec-11",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "sin_respuesta",
+   "mode": "solo",
+   "question": "¿Cuál fue la inflación de noviembre de 2024?",
+   "search_query": "¿Cuál fue la inflación de noviembre de 2024?",
+   "top_score": 0.876,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.876
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 5,
+     "score": 0.8634
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.8585
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 4,
+     "score": 0.8582
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 5,
+     "score": 0.8533
+    }
+   ]
+  },
+  {
+   "id": "indec-11",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "sin_respuesta",
+   "mode": "todos",
+   "question": "¿Cuál fue la inflación de noviembre de 2024?",
+   "search_query": "¿Cuál fue la inflación de noviembre de 2024?",
+   "top_score": 0.876,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.876
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 5,
+     "score": 0.8634
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.8585
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 4,
+     "score": 0.8582
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 5,
+     "score": 0.8533
+    }
+   ]
+  },
+  {
+   "id": "indec-12",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "fuera_de_tema",
+   "mode": "solo",
+   "question": "¿Quién ganó el mundial 2022?",
+   "search_query": "¿Quién ganó el mundial 2022?",
+   "top_score": 0.7859,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 11,
+     "score": 0.7859
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 6,
+     "score": 0.7851
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 8,
+     "score": 0.783
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 6,
+     "score": 0.7813
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 8,
+     "score": 0.7743
+    }
+   ]
+  },
+  {
+   "id": "indec-12",
+   "doc": "indec_ipc_octubre_2024.pdf",
+   "category": "fuera_de_tema",
+   "mode": "todos",
+   "question": "¿Quién ganó el mundial 2022?",
+   "search_query": "¿Quién ganó el mundial 2022?",
+   "top_score": 0.8085,
+   "sources": [
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 9,
+     "score": 0.8085
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 11,
+     "score": 0.7993
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 11,
+     "score": 0.7951
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 9,
+     "score": 0.7942
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 5,
+     "score": 0.7921
+    }
+   ]
+  },
+  {
+   "id": "w9-01",
+   "doc": "irs_form_w9.pdf",
+   "category": "otro_idioma",
+   "mode": "solo",
+   "question": "¿Qué porcentaje se retiene con el backup withholding?",
+   "search_query": "¿Qué porcentaje se retiene con el backup withholding?",
+   "top_score": 0.8501,
+   "sources": [
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 2,
+     "score": 0.8501
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 2,
+     "score": 0.8442
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 3,
+     "score": 0.8397
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 2,
+     "score": 0.8391
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 1,
+     "score": 0.836
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "w9-01",
+   "doc": "irs_form_w9.pdf",
+   "category": "otro_idioma",
+   "mode": "todos",
+   "question": "¿Qué porcentaje se retiene con el backup withholding?",
+   "search_query": "¿Qué porcentaje se retiene con el backup withholding?",
+   "top_score": 0.8501,
+   "sources": [
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 2,
+     "score": 0.8501
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 2,
+     "score": 0.8442
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 3,
+     "score": 0.8397
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 2,
+     "score": 0.8391
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 1,
+     "score": 0.836
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "w9-02",
+   "doc": "irs_form_w9.pdf",
+   "category": "otro_idioma",
+   "mode": "solo",
+   "question": "¿Cuál es la multa por no dar el número de identificación fiscal?",
+   "search_query": "¿Cuál es la multa por no dar el número de identificación fiscal?",
+   "top_score": 0.7949,
+   "sources": [
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 6,
+     "score": 0.7949
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 6,
+     "score": 0.7916
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 6,
+     "score": 0.7905
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 5,
+     "score": 0.7896
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 6,
+     "score": 0.7818
+    }
+   ],
+   "page_rank": null,
+   "chunk_rank": null
+  },
+  {
+   "id": "w9-02",
+   "doc": "irs_form_w9.pdf",
+   "category": "otro_idioma",
+   "mode": "todos",
+   "question": "¿Cuál es la multa por no dar el número de identificación fiscal?",
+   "search_query": "¿Cuál es la multa por no dar el número de identificación fiscal?",
+   "top_score": 0.8137,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 48,
+     "score": 0.8137
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 2,
+     "score": 0.8069
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 2,
+     "score": 0.8054
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 49,
+     "score": 0.8042
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 52,
+     "score": 0.8031
+    }
+   ],
+   "page_rank": null,
+   "chunk_rank": null
+  },
+  {
+   "id": "w9-03",
+   "doc": "irs_form_w9.pdf",
+   "category": "otro_idioma",
+   "mode": "solo",
+   "question": "¿Qué formulario tengo que usar para pedir un ITIN?",
+   "search_query": "¿Qué formulario tengo que usar para pedir un ITIN?",
+   "top_score": 0.8514,
+   "sources": [
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 2,
+     "score": 0.8514
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 4,
+     "score": 0.8502
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 4,
+     "score": 0.8476
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 3,
+     "score": 0.8467
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 4,
+     "score": 0.8455
+    }
+   ],
+   "page_rank": 2,
+   "chunk_rank": 2
+  },
+  {
+   "id": "w9-03",
+   "doc": "irs_form_w9.pdf",
+   "category": "otro_idioma",
+   "mode": "todos",
+   "question": "¿Qué formulario tengo que usar para pedir un ITIN?",
+   "search_query": "¿Qué formulario tengo que usar para pedir un ITIN?",
+   "top_score": 0.8514,
+   "sources": [
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 2,
+     "score": 0.8514
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 4,
+     "score": 0.8502
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 4,
+     "score": 0.8476
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 3,
+     "score": 0.8467
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 4,
+     "score": 0.8455
+    }
+   ],
+   "page_rank": 2,
+   "chunk_rank": 2
+  },
+  {
+   "id": "w9-04",
+   "doc": "irs_form_w9.pdf",
+   "category": "otro_idioma",
+   "mode": "solo",
+   "question": "¿Tengo que mandar este formulario al IRS?",
+   "search_query": "¿Tengo que mandar este formulario al IRS?",
+   "top_score": 0.8669,
+   "sources": [
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 1,
+     "score": 0.8669
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 6,
+     "score": 0.8597
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 1,
+     "score": 0.8588
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 1,
+     "score": 0.8555
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 4,
+     "score": 0.8545
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 3
+  },
+  {
+   "id": "w9-04",
+   "doc": "irs_form_w9.pdf",
+   "category": "otro_idioma",
+   "mode": "todos",
+   "question": "¿Tengo que mandar este formulario al IRS?",
+   "search_query": "¿Tengo que mandar este formulario al IRS?",
+   "top_score": 0.8669,
+   "sources": [
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 1,
+     "score": 0.8669
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 6,
+     "score": 0.8597
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 1,
+     "score": 0.8588
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 1,
+     "score": 0.8555
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 4,
+     "score": 0.8545
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 3
+  },
+  {
+   "id": "w9-05",
+   "doc": "irs_form_w9.pdf",
+   "category": "otro_idioma",
+   "mode": "solo",
+   "question": "Si soy extranjero no residente, ¿qué formulario tengo que presentar?",
+   "search_query": "Si soy extranjero no residente, ¿qué formulario tengo que presentar?",
+   "top_score": 0.8224,
+   "sources": [
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 2,
+     "score": 0.8224
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 1,
+     "score": 0.8218
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 2,
+     "score": 0.8175
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 2,
+     "score": 0.8147
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 2,
+     "score": 0.8093
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": null
+  },
+  {
+   "id": "w9-05",
+   "doc": "irs_form_w9.pdf",
+   "category": "otro_idioma",
+   "mode": "todos",
+   "question": "Si soy extranjero no residente, ¿qué formulario tengo que presentar?",
+   "search_query": "Si soy extranjero no residente, ¿qué formulario tengo que presentar?",
+   "top_score": 0.8224,
+   "sources": [
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 2,
+     "score": 0.8224
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 2,
+     "score": 0.8223
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 1,
+     "score": 0.8218
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 27,
+     "score": 0.8214
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 7,
+     "score": 0.82
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": null
+  },
+  {
+   "id": "w9-06",
+   "doc": "irs_form_w9.pdf",
+   "category": "otro_idioma",
+   "mode": "solo",
+   "question": "Si puse «Applied For», ¿cuánto tiempo tengo para conseguir el número?",
+   "search_query": "Si puse «Applied For», ¿cuánto tiempo tengo para conseguir el número?",
+   "top_score": 0.8448,
+   "sources": [
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 4,
+     "score": 0.8448
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 4,
+     "score": 0.8304
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 4,
+     "score": 0.808
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 1,
+     "score": 0.8
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 4,
+     "score": 0.7923
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "w9-06",
+   "doc": "irs_form_w9.pdf",
+   "category": "otro_idioma",
+   "mode": "todos",
+   "question": "Si puse «Applied For», ¿cuánto tiempo tengo para conseguir el número?",
+   "search_query": "Si puse «Applied For», ¿cuánto tiempo tengo para conseguir el número?",
+   "top_score": 0.8448,
+   "sources": [
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 4,
+     "score": 0.8448
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 4,
+     "score": 0.8304
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 9,
+     "score": 0.8092
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 4,
+     "score": 0.808
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 14,
+     "score": 0.8079
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "w9-07",
+   "doc": "irs_form_w9.pdf",
+   "category": "sin_respuesta",
+   "mode": "solo",
+   "question": "¿Cuál es la tasa del impuesto a las ganancias para personas físicas en Estados Unidos?",
+   "search_query": "¿Cuál es la tasa del impuesto a las ganancias para personas físicas en Estados Unidos?",
+   "top_score": 0.8079,
+   "sources": [
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 6,
+     "score": 0.8079
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 6,
+     "score": 0.8052
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 2,
+     "score": 0.8049
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 1,
+     "score": 0.8035
+    },
+    {
+     "doc": "irs_form_w9.pdf",
+     "page": 2,
+     "score": 0.8019
+    }
+   ]
+  },
+  {
+   "id": "w9-07",
+   "doc": "irs_form_w9.pdf",
+   "category": "sin_respuesta",
+   "mode": "todos",
+   "question": "¿Cuál es la tasa del impuesto a las ganancias para personas físicas en Estados Unidos?",
+   "search_query": "¿Cuál es la tasa del impuesto a las ganancias para personas físicas en Estados Unidos?",
+   "top_score": 0.8332,
+   "sources": [
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 14,
+     "score": 0.8332
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 9,
+     "score": 0.8254
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 15,
+     "score": 0.8236
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 3,
+     "score": 0.8225
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 14,
+     "score": 0.8219
+    }
+   ]
+  },
+  {
+   "id": "pdfjs-01",
+   "doc": "pdfjs_wikipedia.pdf",
+   "category": "otro_idioma",
+   "mode": "solo",
+   "question": "¿Quién creó PDF.js?",
+   "search_query": "¿Quién creó PDF.js?",
+   "top_score": 0.883,
+   "sources": [
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.883
+    },
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8611
+    },
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8168
+    },
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.7675
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "pdfjs-01",
+   "doc": "pdfjs_wikipedia.pdf",
+   "category": "otro_idioma",
+   "mode": "todos",
+   "question": "¿Quién creó PDF.js?",
+   "search_query": "¿Quién creó PDF.js?",
+   "top_score": 0.883,
+   "sources": [
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.883
+    },
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8611
+    },
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8168
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 2,
+     "score": 0.7897
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 2,
+     "score": 0.7791
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "pdfjs-02",
+   "doc": "pdfjs_wikipedia.pdf",
+   "category": "otro_idioma",
+   "mode": "solo",
+   "question": "¿Con qué licencia se distribuye?",
+   "search_query": "¿Con qué licencia se distribuye?",
+   "top_score": 0.7534,
+   "sources": [
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.7534
+    },
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.7526
+    },
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.7447
+    },
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.7367
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 2
+  },
+  {
+   "id": "pdfjs-02",
+   "doc": "pdfjs_wikipedia.pdf",
+   "category": "otro_idioma",
+   "mode": "todos",
+   "question": "¿Con qué licencia se distribuye?",
+   "search_query": "¿Con qué licencia se distribuye?",
+   "top_score": 0.8206,
+   "sources": [
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 40,
+     "score": 0.8206
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 2,
+     "score": 0.8171
+    },
+    {
+     "doc": "declaracion_derechos_humanos.pdf",
+     "page": 8,
+     "score": 0.8121
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 15,
+     "score": 0.8112
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 14,
+     "score": 0.8103
+    }
+   ],
+   "page_rank": null,
+   "chunk_rank": null
+  },
+  {
+   "id": "pdfjs-03",
+   "doc": "pdfjs_wikipedia.pdf",
+   "category": "otro_idioma",
+   "mode": "solo",
+   "question": "¿Desde qué versión de Firefox viene activado por defecto?",
+   "search_query": "¿Desde qué versión de Firefox viene activado por defecto?",
+   "top_score": 0.7971,
+   "sources": [
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.7971
+    },
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.7828
+    },
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.7793
+    },
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.7581
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "pdfjs-03",
+   "doc": "pdfjs_wikipedia.pdf",
+   "category": "otro_idioma",
+   "mode": "todos",
+   "question": "¿Desde qué versión de Firefox viene activado por defecto?",
+   "search_query": "¿Desde qué versión de Firefox viene activado por defecto?",
+   "top_score": 0.7971,
+   "sources": [
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.7971
+    },
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.7828
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 19,
+     "score": 0.7774
+    },
+    {
+     "doc": "victor_jara_wikipedia.pdf",
+     "page": 10,
+     "score": 0.7714
+    },
+    {
+     "doc": "constitucion_argentina.pdf",
+     "page": 53,
+     "score": 0.7701
+    }
+   ],
+   "page_rank": 1,
+   "chunk_rank": 1
+  },
+  {
+   "id": "pdfjs-04",
+   "doc": "pdfjs_wikipedia.pdf",
+   "category": "sin_respuesta",
+   "mode": "solo",
+   "question": "¿Cuántas descargas por mes tiene PDF.js?",
+   "search_query": "¿Cuántas descargas por mes tiene PDF.js?",
+   "top_score": 0.877,
+   "sources": [
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.877
+    },
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8422
+    },
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8356
+    },
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.7965
+    }
+   ]
+  },
+  {
+   "id": "pdfjs-04",
+   "doc": "pdfjs_wikipedia.pdf",
+   "category": "sin_respuesta",
+   "mode": "todos",
+   "question": "¿Cuántas descargas por mes tiene PDF.js?",
+   "search_query": "¿Cuántas descargas por mes tiene PDF.js?",
+   "top_score": 0.877,
+   "sources": [
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.877
+    },
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8422
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 14,
+     "score": 0.8382
+    },
+    {
+     "doc": "indec_ipc_octubre_2024.pdf",
+     "page": 15,
+     "score": 0.836
+    },
+    {
+     "doc": "pdfjs_wikipedia.pdf",
+     "page": 1,
+     "score": 0.8356
+    }
+   ]
+  }
+ ]
+}
