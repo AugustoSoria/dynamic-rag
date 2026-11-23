@@ -31,6 +31,18 @@ def normalize_doc_id(doc_id: str) -> str:
         raise HTTPException(status_code=404, detail="Documento no encontrado.")
 
 
+def client_ip(request: Request) -> str:
+    """
+    IP del usuario. Detrás de CloudFront, la conexión llega desde CloudFront: la IP real viene en
+    CloudFront-Viewer-Address ("ip:puerto", también IPv6), que CloudFront genera y el usuario no puede falsificar.
+    Sin ese encabezado configurado, uvicorn ya resuelve la IP desde X-Forwarded-For (--proxy-headers, para Caddy).
+    """
+    header = get_settings().client_ip_header
+    if header and (value := request.headers.get(header)):
+        return value.rsplit(":", 1)[0].strip("[]")
+    return request.client.host if request.client else "desconocida"
+
+
 def _rate_limit(action: str, setting: str):
     """Dependencia que limita cuántas veces por hora una misma IP puede hacer `action`."""
 
@@ -38,8 +50,7 @@ def _rate_limit(action: str, setting: str):
         limit = getattr(get_settings(), setting)
         if limit <= 0:
             return
-        # Detrás del proxy (Caddy), uvicorn toma la IP real de X-Forwarded-For (--proxy-headers).
-        ip = request.client.host if request.client else "desconocida"
+        ip = client_ip(request)
         wait = limiter.hit(f"{action}:{ip}", limit, 3600)
         if wait is not None:
             raise HTTPException(

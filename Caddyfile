@@ -1,5 +1,6 @@
-# Caddy obtiene y renueva el certificado HTTPS solo (Let's Encrypt) para {$DOMAIN}.
-# Con DOMAIN=localhost usa un certificado local autofirmado (para probar en la máquina).
+# DOMAIN=un.dominio.com -> Caddy obtiene y renueva el certificado HTTPS solo (Let's Encrypt).
+# DOMAIN=localhost      -> certificado local autofirmado (para probar en la máquina).
+# DOMAIN=:80            -> HTTP simple, cuando el HTTPS lo pone otro delante (CloudFront, en AWS).
 {$DOMAIN} {
 	reverse_proxy backend:8000 {
 		# Reenvía cada fragmento apenas llega: necesario para el streaming SSE del chat.

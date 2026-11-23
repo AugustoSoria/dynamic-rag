@@ -42,6 +42,9 @@ class Settings(BaseSettings):
     # Límite de uso por IP (por hora). 0 = sin límite.
     rate_limit_chat_per_hour: int = 30
     rate_limit_uploads_per_hour: int = 10
+    # Encabezado con la IP real del usuario cuando hay un proxy/CDN delante (p. ej. CloudFront-Viewer-Address).
+    # Vacío = se usa la IP de la conexión. Solo es seguro si al servidor no se puede llegar sin pasar por ese proxy.
+    client_ip_header: str = ""
 
     # CORS
     cors_origins: list[str] = ["http://localhost:5173"]

@@ -61,3 +61,35 @@ def test_sin_limite_con_cero(client, fake_llm, session_headers):  # noqa: F811
     body = {"question": "¿Hola?", "history": []}
     for _ in range(5):
         assert client.post("/api/chat", headers=session_headers, json=body).status_code == 200
+
+
+def test_ip_desde_encabezado_de_cloudfront(client, limits, fake_llm, monkeypatch):  # noqa: F811
+    monkeypatch.setattr(get_settings(), "client_ip_header", "CloudFront-Viewer-Address")
+    body = {"question": "¿Hola?", "history": []}
+    import uuid
+
+    def ask(viewer):
+        h = {"X-Session-ID": str(uuid.uuid4()), "CloudFront-Viewer-Address": viewer}
+        return client.post("/api/chat", headers=h, json=body).status_code
+
+    # Mismo usuario (distinto puerto) agota su límite; otro usuario detrás del mismo CloudFront no se ve afectado.
+    assert ask("203.0.113.7:50001") == 200
+    assert ask("203.0.113.7:50002") == 200
+    assert ask("203.0.113.7:50003") == 429
+    assert ask("2001:db8::1:443") == 200  # IPv6
+
+
+def test_client_ip_parsea_ipv4_e_ipv6(monkeypatch):
+    from starlette.requests import Request
+
+    from app.api.deps import client_ip
+
+    monkeypatch.setattr(get_settings(), "client_ip_header", "CloudFront-Viewer-Address")
+
+    def req(value):
+        headers = [(b"cloudfront-viewer-address", value.encode())] if value else []
+        return Request({"type": "http", "headers": headers, "client": ("10.0.0.1", 1234)})
+
+    assert client_ip(req("203.0.113.7:50001")) == "203.0.113.7"
+    assert client_ip(req("2001:db8::1:443")) == "2001:db8::1"
+    assert client_ip(req("")) == "10.0.0.1"  # sin encabezado: IP de la conexión

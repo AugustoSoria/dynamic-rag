@@ -1,7 +1,7 @@
-# Backend + Caddy (HTTPS automático). El frontend se publica aparte en Vercel.
+# Backend + Caddy. El frontend se publica aparte en Vercel.
 #
 # Variables (archivo .env en esta carpeta, junto a este archivo):
-#   DOMAIN   dominio público del backend, p. ej. 3-15-20-1.sslip.io (en local: localhost)
+#   DOMAIN   qué atiende Caddy (ver Caddyfile): localhost en local, :80 en AWS (detrás de CloudFront)
 # Variables del backend: backend/.env (GROQ_API_KEY, CORS_ORIGINS, ...)
 
 services:
