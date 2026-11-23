@@ -1,4 +1,4 @@
-import { Loader2, Menu } from "lucide-react";
+import { FileText, Loader2, Menu, PanelLeftOpen } from "lucide-react";
 import { lazy, Suspense, useState } from "react";
 
 import type { DocumentInfo, Source } from "../api/types";
@@ -11,6 +11,28 @@ import { Sidebar } from "./Sidebar";
 // pdf.js pesa ~700 KB: el visor se descarga recién la primera vez que se abre un PDF.
 const PdfViewer = lazy(() => import("./PdfViewer").then((m) => ({ default: m.PdfViewer })));
 
+const COLLAPSED_KEY = "dynamic-rag:sidebar-collapsed";
+
+/** Preferencia de panel plegado (solo escritorio), recordada entre visitas. */
+function useCollapsedSidebar() {
+  const [collapsed, setCollapsed] = useState(() => {
+    try {
+      return localStorage.getItem(COLLAPSED_KEY) === "1";
+    } catch {
+      return false; // localStorage no disponible (modo privado, cookies bloqueadas)
+    }
+  });
+  const update = (value: boolean) => {
+    setCollapsed(value);
+    try {
+      localStorage.setItem(COLLAPSED_KEY, value ? "1" : "0");
+    } catch {
+      // sin persistencia: la preferencia dura hasta recargar
+    }
+  };
+  return [collapsed, update] as const;
+}
+
 interface Props {
   sessionId: string;
   onNewSession: () => void;
@@ -19,7 +41,9 @@ interface Props {
 export function Workspace({ sessionId, onNewSession }: Props) {
   const docs = useDocuments(sessionId);
   const chat = useChat(sessionId, docs.selectedIds);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // menú deslizable en mobile
+  const [collapsed, setCollapsed] = useCollapsedSidebar(); // panel plegado en escritorio
+  const uploading = docs.upload.state !== "idle" && docs.upload.state !== "error";
   const [viewer, setViewer] = useState<ViewerTarget | null>(null);
 
   // Si el documento abierto se elimina, el visor se cierra solo (estado derivado, sin efectos).
@@ -50,17 +74,47 @@ export function Workspace({ sessionId, onNewSession }: Props) {
         (Antes se renderizaba dos veces, una oculta con CSS, duplicando su DOM y su estado.)
       */}
       <aside
-        className={`flex shrink-0 bg-white transition-[translate,visibility] duration-200 md:static md:w-80 md:border-r md:border-slate-200 max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:z-50 max-md:w-[85%] max-md:max-w-80 max-md:shadow-xl ${
+        className={`flex shrink-0 bg-white transition-[translate,visibility] duration-200 md:static md:border-r md:border-slate-200 max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:z-50 max-md:w-[85%] max-md:max-w-80 max-md:shadow-xl ${
           sidebarOpen ? "" : "max-md:invisible max-md:-translate-x-full"
-        }`}
+        } ${collapsed ? "md:w-14" : "md:w-80"}`}
       >
-        <Sidebar
-          docs={docs}
-          openDocId={viewerDoc?.doc_id}
-          onOpenDocument={openDocument}
-          onNewSession={onNewSession}
-          onClose={() => setSidebarOpen(false)}
-        />
+        {/* Plegado (solo escritorio): una franja angosta con lo justo para volver a abrirlo. */}
+        {collapsed && (
+          <div className="hidden w-full flex-col items-center gap-3 py-4 md:flex">
+            <button
+              onClick={() => setCollapsed(false)}
+              className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+              aria-label="Mostrar documentos"
+              title="Mostrar documentos"
+            >
+              <PanelLeftOpen className="size-5" />
+            </button>
+            <button
+              onClick={() => setCollapsed(false)}
+              className="relative rounded-lg p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-800"
+              aria-label={`Mostrar documentos (${countLabel(docs.documents.length)})`}
+              title={uploading ? "Procesando un documento…" : countLabel(docs.documents.length)}
+            >
+              {uploading ? <Loader2 className="size-5 animate-spin text-indigo-600" /> : <FileText className="size-5" />}
+              {docs.documents.length > 0 && (
+                <span className="absolute -top-1 -right-1 flex size-4 items-center justify-center rounded-full bg-indigo-600 text-[10px] font-semibold text-white">
+                  {docs.documents.length}
+                </span>
+              )}
+            </button>
+          </div>
+        )}
+        {/* Sigue montado aunque esté plegado: en mobile el menú deslizable siempre lo muestra. */}
+        <div className={`flex w-full ${collapsed ? "md:hidden" : ""}`}>
+          <Sidebar
+            docs={docs}
+            openDocId={viewerDoc?.doc_id}
+            onOpenDocument={openDocument}
+            onNewSession={onNewSession}
+            onClose={() => setSidebarOpen(false)}
+            onCollapse={() => setCollapsed(true)}
+          />
+        </div>
       </aside>
 
       <main className="flex min-w-0 flex-1 flex-col">
@@ -73,9 +127,7 @@ export function Workspace({ sessionId, onNewSession }: Props) {
             <Menu className="size-5" />
           </button>
           <span className="font-semibold text-slate-900">Dynamic RAG</span>
-          <span className="ml-auto text-xs text-slate-500">
-            {docs.documents.length} {docs.documents.length === 1 ? "documento" : "documentos"}
-          </span>
+          <span className="ml-auto text-xs text-slate-500">{countLabel(docs.documents.length)}</span>
         </div>
 
         <ChatPanel
@@ -110,6 +162,10 @@ export function Workspace({ sessionId, onNewSession }: Props) {
       )}
     </div>
   );
+}
+
+function countLabel(n: number): string {
+  return n === 1 ? "1 documento" : `${n} documentos`;
 }
 
 function scopeLabel(total: number, selected: number): string {

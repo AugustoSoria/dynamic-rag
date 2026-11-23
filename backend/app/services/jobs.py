@@ -5,8 +5,8 @@ La subida responde enseguida con un trabajo (`JobStatus`) y los embeddings se ge
 aparte. El cliente consulta el estado para mostrar el avance real ("640 de 1577 fragmentos").
 
 Decisiones:
-- Un solo hilo de trabajo: generar embeddings usa toda la CPU disponible (en el plan gratis de
-  Hugging Face son 2 vCPU). Procesar dos PDFs a la vez no termina antes ninguno; los demás esperan
+- Un solo hilo de trabajo: generar embeddings usa toda la CPU disponible (el servidor de
+  producción, una EC2 t3.small, tiene 2 vCPU). Procesar dos PDFs a la vez no termina antes ninguno; los demás esperan
   en cola y el cliente ve su posición.
 - El registro vive en memoria: alcanza para un solo proceso. Si el servidor se reinicia, los
   trabajos en curso se pierden (el documento nunca llegó a guardarse, así que no queda nada a medias).

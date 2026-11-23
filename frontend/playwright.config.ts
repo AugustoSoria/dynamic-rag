@@ -59,6 +59,10 @@ export default defineConfig({
       url: "http://localhost:8000/api/health",
       reuseExistingServer: true,
       timeout: 180_000, // la primera vez carga el modelo de embeddings
+      // Todos los tests salen de la misma IP: con el límite de uso activo, la suite se bloquearía sola.
+      // (El límite tiene sus propios tests en el backend.) Si ya hay un backend corriendo, se reutiliza
+      // con su configuración: levantarlo con RATE_LIMIT_*_PER_HOUR=0 o dejar que Playwright lo inicie.
+      env: { RATE_LIMIT_CHAT_PER_HOUR: "0", RATE_LIMIT_UPLOADS_PER_HOUR: "0" },
       stdout: "ignore",
       stderr: "pipe",
     },

@@ -1,4 +1,4 @@
-import { FileSearch, RotateCcw, X } from "lucide-react";
+import { FileSearch, PanelLeftClose, RotateCcw, X } from "lucide-react";
 
 import type { DocumentInfo } from "../api/types";
 import type { useDocuments } from "../hooks/useDocuments";
@@ -11,9 +11,11 @@ interface Props {
   onOpenDocument: (doc: DocumentInfo) => void;
   onNewSession: () => void;
   onClose: () => void;
+  /** Pliega el panel (solo escritorio), para dar más lugar al chat y al visor. */
+  onCollapse: () => void;
 }
 
-export function Sidebar({ docs, openDocId, onOpenDocument, onNewSession, onClose }: Props) {
+export function Sidebar({ docs, openDocId, onOpenDocument, onNewSession, onClose, onCollapse }: Props) {
   const handleNewSession = () => {
     if (
       docs.documents.length === 0 ||
@@ -33,6 +35,14 @@ export function Sidebar({ docs, openDocId, onOpenDocument, onNewSession, onClose
           <h1 className="font-semibold text-slate-900">Dynamic RAG</h1>
           <p className="text-xs text-slate-500">Chateá con tus PDFs</p>
         </div>
+        <button
+          onClick={onCollapse}
+          className="ml-auto hidden rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 md:block"
+          aria-label="Ocultar documentos"
+          title="Ocultar documentos"
+        >
+          <PanelLeftClose className="size-5" />
+        </button>
         <button
           onClick={onClose}
           className="ml-auto rounded-lg p-1.5 text-slate-500 hover:bg-slate-100 md:hidden"

@@ -116,3 +116,21 @@ test("muestra un error entendible si el backend no responde, y se recupera", asy
   await expect(page.getByText("Todavía no subiste ningún documento.")).toBeVisible();
   await linger(page);
 });
+
+test("pliega el panel de documentos para dar lugar al visor, y lo recuerda al recargar", async ({ page }) => {
+  await uploadPdf(page, "informe_acme.pdf");
+  await page.getByRole("button", { name: /^informe_acme\.pdf/ }).click();
+  await expect(page.getByTestId("pdf-viewer")).toContainText("1 / 4");
+
+  await page.getByRole("button", { name: "Ocultar documentos" }).click();
+  await expect(page.getByTestId("document-item")).toBeHidden();
+  await expect(page.getByRole("button", { name: "Mostrar documentos (1 documento)" })).toBeVisible();
+  await linger(page);
+
+  await page.reload();
+  await expect(page.getByRole("button", { name: "Mostrar documentos", exact: true })).toBeVisible();
+
+  await page.getByRole("button", { name: "Mostrar documentos", exact: true }).click();
+  await expect(page.getByTestId("document-item")).toBeVisible();
+  await linger(page);
+});
