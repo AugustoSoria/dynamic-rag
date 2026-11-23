@@ -59,6 +59,26 @@ Mide en dos modos: `solo` (cada pregunta busca en su documento) y `todos` (busca
 
 Cada corrida queda en `results/retrieval-<label>.json`. `retrieval-base.json` es la línea base, antes de cualquier mejora.
 
+## Medir las respuestas
+
+```
+python -m eval.answers --label base
+```
+
+Genera cada respuesta con el flujo real del chat (reescritura de la pregunta → búsqueda → respuesta, con `GROQ_MODEL`) y la corrige con un modelo más grande, `openai/gpt-oss-120b` ("LLM como juez"). Es la misma idea que RAGAS, pero en una sola llamada por respuesta en lugar de varias: RAGAS necesitaría más de 300.000 tokens por corrida, más de lo que permite el plan gratis de Groq en un día. Una corrida usa unos 250.000 tokens repartidos entre los dos modelos y tarda unos 40 minutos, sobre todo por el límite de 8.000 tokens por minuto.
+
+El juez devuelve, para cada respuesta:
+
+- **corrección**: comparada con la respuesta de referencia, `completa` (1), `parcial` (0,5) o `incorrecta` (0).
+- **fidelidad**: la respuesta separada en afirmaciones, cada una marcada como respaldada o no por las fuentes. Es la *faithfulness* de RAGAS: mide si el modelo inventó algo, aunque sea verdad. "Con invento" es el % de respuestas con al menos una afirmación sin respaldo.
+- **dijo no sé**: si respondió que el documento no tiene la información. En las preguntas con respuesta es un error; en `sin_respuesta` y `fuera_de_tema` es lo correcto.
+
+Y sin LLM, **citas ok**: que la respuesta cite al menos una fuente y que todas las citas apunten a fuentes que existen.
+
+El avance se guarda después de cada pregunta en `results/answers-<label>.json`: si se corta, al volver a correrlo retoma donde quedó. Con `--rejudge` se vuelve a corregir sin regenerar las respuestas (útil al ajustar el juez) y con `--limit 3` se prueba con pocas preguntas.
+
+**Limitaciones del juez.** Como todo LLM juez, se equivoca a veces y su nota varía un poco entre corridas, así que diferencias de pocos puntos entre dos corridas no son significativas. Un caso conocido: en "¿Qué dice el artículo 18?" el bot le atribuye al artículo 18 el inciso 18 del artículo 75 (el fragmento empieza con "18. Proveer lo conducente…" sin decir de qué artículo es), y el juez no lo detecta. Conviene revisar a mano las respuestas marcadas como no completas.
+
 ## Validar
 
 Después de editar el dataset, desde `backend/` con el venv activado:
