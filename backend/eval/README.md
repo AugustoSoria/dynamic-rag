@@ -79,6 +79,27 @@ El avance se guarda después de cada pregunta en `results/answers-<label>.json`:
 
 **Limitaciones del juez.** Como todo LLM juez, se equivoca a veces y su nota varía un poco entre corridas, así que diferencias de pocos puntos entre dos corridas no son significativas. Un caso conocido: en "¿Qué dice el artículo 18?" el bot le atribuye al artículo 18 el inciso 18 del artículo 75 (el fragmento empieza con "18. Proveer lo conducente…" sin decir de qué artículo es), y el juez no lo detecta. Conviene revisar a mano las respuestas marcadas como no completas.
 
+## Línea base (antes de las mejoras)
+
+Búsqueda (`results/retrieval-base.json`): el fragmento con la respuesta está entre las 5 fuentes en el **86%** de las preguntas buscando en un documento y en el **82%** buscando en los 6. Lo más débil: referencias exactas, preguntas en otro idioma y de seguimiento.
+
+Respuestas (`results/answers-base.json`), según el juez:
+
+| | n | completas | dijo no sé | con invento |
+|---|---|---|---|---|
+| Con respuesta en el documento | 57 | 79% | 9% (error) | 2% |
+| Sin respuesta en el documento | 9 | 100% | 100% (correcto) | - |
+| Globales ("¿de qué trata?") | 3 | 0% | 0% | 67% |
+
+Revisión a mano de las 15 respuestas no completas:
+
+- **6 fallan porque la búsqueda no trajo el fragmento correcto** (const-01, jara-03, indec-02, indec-03, w9-02, w9-05). Son las 6 marcadas como incorrectas: en 5 el bot dice que no encontró la información aunque está en el documento, y en indec-02 responde un número equivocado (3,2% en vez de 193,0%), que sacó de un gráfico cuyo texto extraído es una lista de números sin rótulos. **Es el problema principal, y es justo el que atacan la búsqueda híbrida y el reranker.**
+- **3 son las preguntas globales**: con 5 fragmentos no se puede resumir un documento entero (limitación conocida, ver el README principal).
+- **2 son errores del LLM con las fuentes correctas**: jara-01 agrega que "el consenso es San Ignacio", algo que el documento no dice, y ddhh-04 omite el inciso 2 del artículo 14, que estaba en las fuentes.
+- **4 están bien respondidas, pero el juez es estricto**: le faltan detalles de la referencia que la pregunta no pedía (por ejemplo, "¿Cuánto duran los senadores?" → "seis años", sin aclarar que son reelegibles). Con ellas, las respuestas aceptables suben del 79% al ~86%.
+
+No hubo inventos con la evidencia a la vista, y en las 9 preguntas sin respuesta dijo "no sé" siempre: el prompt funciona. El juez tuvo un error claro: en indec-02 marcó como respaldado el 3,2% (el número está en la fuente, pero no es la variación interanual). La fidelidad puede sobrestimarse cuando la fuente es una tabla desordenada.
+
 ## Validar
 
 Después de editar el dataset, desde `backend/` con el venv activado:
