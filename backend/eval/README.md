@@ -100,6 +100,30 @@ Revisión a mano de las 15 respuestas no completas:
 
 No hubo inventos con la evidencia a la vista, y en las 9 preguntas sin respuesta dijo "no sé" siempre: el prompt funciona. El juez tuvo un error claro: en indec-02 marcó como respaldado el 3,2% (el número está en la fuente, pero no es la variación interanual). La fidelidad puede sobrestimarse cuando la fuente es una tabla desordenada.
 
+## Búsqueda híbrida (BM25 + vectores)
+
+Búsqueda (`results/retrieval-hibrida.json`), fragmento exacto entre las 5 fuentes:
+
+| | Un documento | Los 6 documentos |
+|---|---|---|
+| Antes | 86% | 82% |
+| Con búsqueda híbrida | **93%** | **91%** |
+
+Las referencias exactas y los números pasan al 100% en los dos modos. No mejoran las preguntas en otro idioma (las palabras no coinciden entre idiomas) y 5 preguntas bajan un puesto, pero ninguna pierde el fragmento.
+
+Respuestas (`results/answers-hibrida.json`), preguntas con respuesta en el documento:
+
+| | Completas | Dijo "no sé" (error) | Con invento | Citas ok |
+|---|---|---|---|---|
+| Antes | 79% | 9% | 2% | 100% |
+| Con búsqueda híbrida | **88%** | **2%** | 4% | 100% |
+
+- **8 preguntas mejoran**, entre ellas 4 de las 6 que antes eran incorrectas por la búsqueda: el artículo 14 de la Constitución, la inflación interanual (antes respondía 3,2%, ahora 193,0%), la acumulada y el formulario para extranjeros.
+- **1 empeora**: "¿Cuáles son los puntos principales?" sobre Víctor Jara, una pregunta global, que sigue siendo una limitación con o sin búsqueda híbrida.
+- **Siguen fallando 2 por la búsqueda**: "¿Con quién se casó?" (el texto dice "esposa" y "cónyuge", no "casó") y una pregunta en español sobre el W-9 en inglés. BM25 no ayuda cuando no coinciden las palabras; son el caso del reranker.
+- **"Con invento"** sube por dos respuestas: en una el juez se equivoca (el dato sí está en las fuentes) y en la otra el modelo agrega de su propio conocimiento "W-8BEN o W-8BEN-E", que es cierto pero no está en el documento.
+- Las 9 preguntas sin respuesta siguen respondiéndose con "no sé".
+
 ## Validar
 
 Después de editar el dataset, desde `backend/` con el venv activado:

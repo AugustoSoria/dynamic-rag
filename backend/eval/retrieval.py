@@ -181,6 +181,7 @@ def main() -> int:
         "chunk_size": settings.chunk_size,
         "chunk_overlap": settings.chunk_overlap,
         "top_k": settings.top_k,
+        "retrieval_mode": settings.retrieval_mode,
     }
     out.write_text(
         json.dumps({"config": config, "summary": summary, "rows": rows}, ensure_ascii=False, indent=1),

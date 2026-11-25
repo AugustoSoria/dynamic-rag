@@ -29,6 +29,11 @@ class Settings(BaseSettings):
     chunk_size: int = 800
     chunk_overlap: int = 150
     top_k: int = 5
+    # "hybrid": combina la búsqueda semántica con la de palabras clave (BM25). "vector": solo semántica.
+    retrieval_mode: Literal["vector", "hybrid"] = "hybrid"
+    # Candidatos que aporta cada búsqueda antes de combinarlas, y constante de la fusión (RRF).
+    hybrid_candidates: int = 20
+    rrf_k: int = 60
 
     # Límites de subida
     max_upload_mb: int = 20

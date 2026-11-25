@@ -7,7 +7,7 @@ from typing import Any
 
 from app.config import get_settings
 from app.models import DocumentInfo, HistoryMessage, Source
-from app.services import chunker, document_store, embeddings, llm, pdf_parser, vector_store
+from app.services import chunker, document_store, embeddings, keyword_index, llm, pdf_parser, vector_store
 
 logger = logging.getLogger(__name__)
 
@@ -92,9 +92,39 @@ def ingest_pdf(session_id: str, filename: str, data: bytes) -> DocumentInfo:
 
 # --- Retrieval ---------------------------------------------------------------
 
+def reciprocal_rank_fusion(rankings: list[list[str]], k: int) -> list[str]:
+    """
+    Combina varios rankings de ids: cada id suma 1 / (k + posición) en cada ranking donde aparece.
+    Usa solo las posiciones, no los puntajes, que en cada búsqueda están en escalas distintas
+    (similitud coseno contra BM25). Un k grande suaviza la ventaja de los primeros puestos.
+    """
+    scores: dict[str, float] = {}
+    for ranking in rankings:
+        for position, item in enumerate(ranking, start=1):
+            scores[item] = scores.get(item, 0.0) + 1 / (k + position)
+    return sorted(scores, key=lambda item: scores[item], reverse=True)
+
+
+def _hybrid_search(session_id: str, question: str, doc_ids: list[str] | None) -> list[vector_store.RetrievedChunk]:
+    settings = get_settings()
+    query_embedding = embeddings.embed_query(question)
+    semantic = vector_store.search(session_id, query_embedding, settings.hybrid_candidates, doc_ids)
+    keyword = keyword_index.search(
+        session_id, question, settings.hybrid_candidates, doc_ids, load=lambda: vector_store.session_chunks(session_id)
+    )
+    best = reciprocal_rank_fusion([[c.id for c in semantic], keyword], settings.rrf_k)[: settings.top_k]
+
+    found = {c.id: c for c in semantic}
+    found.update({c.id: c for c in vector_store.get_chunks([i for i in best if i not in found], query_embedding)})
+    return [found[i] for i in best if i in found]
+
+
 def retrieve(session_id: str, question: str, doc_ids: list[str] | None = None) -> list[Source]:
     settings = get_settings()
-    results = vector_store.search(session_id, embeddings.embed_query(question), settings.top_k, doc_ids)
+    if settings.retrieval_mode == "hybrid":
+        results = _hybrid_search(session_id, question, doc_ids)
+    else:
+        results = vector_store.search(session_id, embeddings.embed_query(question), settings.top_k, doc_ids)
     return [
         Source(index=i, doc_id=r.doc_id, filename=r.filename, page=r.page, text=r.text, score=r.score)
         for i, r in enumerate(results, start=1)

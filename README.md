@@ -10,7 +10,9 @@ Subí uno o varios PDFs y hacele preguntas. Cada respuesta cita las páginas de 
 
 - **Respuestas con citas verificables.** Cada afirmación lleva un número `[n]`. Al hacer clic, el visor abre el PDF en esa página y resalta el fragmento exacto.
 - **Streaming.** La respuesta aparece palabra por palabra.
+- **Búsqueda híbrida.** Combina la búsqueda semántica con la de palabras clave (BM25), así encuentra tanto preguntas dichas con otras palabras como referencias exactas ("¿qué dice el artículo 14?"), cifras y nombres.
 - **Conversación con memoria.** Las preguntas de seguimiento ("¿y dónde nació?") se reescriben con el contexto de la charla antes de buscar.
+- **Calidad medida.** Un conjunto de 69 preguntas sobre 6 PDFs reales mide la búsqueda y las respuestas antes y después de cada cambio (ver [Evaluación](#evaluación)).
 - **Varios documentos.** Se puede buscar en todos o elegir en cuáles.
 - **Procesamiento en segundo plano con progreso real.** Muestra los fragmentos procesados, la posición en la cola y el tiempo restante. Si se recarga la página, el progreso se retoma.
 - **Sesiones anónimas y temporales.** No hay registro. Los documentos de cada visitante están aislados de los demás y se borran solos tras 2 horas sin actividad.
@@ -28,15 +30,19 @@ flowchart LR
     end
     subgraph Consulta["Al preguntar"]
         F[Pregunta +<br/>historial] --> G[Reescribir la pregunta<br/>con el contexto]
-        G --> H[Buscar los 5 fragmentos<br/>más parecidos]
-        E --> H
+        G --> H1[Búsqueda semántica<br/>20 candidatos]
+        G --> H2[Búsqueda BM25<br/>20 candidatos]
+        E --> H1
+        E --> H2
+        H1 --> H[Fusión RRF:<br/>los 5 mejores]
+        H2 --> H
         H --> I[gpt-oss-20b en Groq<br/>con los fragmentos numerados]
         I --> J[Respuesta en streaming<br/>con citas]
     end
 ```
 
 1. **Ingesta.** PyMuPDF extrae el texto de cada página, que se divide en fragmentos de unos 800 caracteres con 150 de superposición. Cada fragmento guarda su página de origen. Los embeddings se generan localmente con `intfloat/multilingual-e5-small`, un modelo multilingüe y liviano que anda bien en español, y se guardan en ChromaDB con la sesión y el documento como metadatos.
-2. **Consulta.** Si hay historial, el LLM primero reescribe la pregunta para que se entienda sola. Por ejemplo, "¿y dónde nació?" pasa a ser "¿Dónde nació Víctor Jara?". Con esa versión se buscan los 5 fragmentos más similares, filtrando por la sesión y los documentos elegidos.
+2. **Consulta.** Si hay historial, el LLM primero reescribe la pregunta para que se entienda sola. Por ejemplo, "¿y dónde nació?" pasa a ser "¿Dónde nació Víctor Jara?". Con esa versión se hacen dos búsquedas, filtrando por la sesión y los documentos elegidos: una semántica en ChromaDB y otra por palabras clave con BM25. Cada una aporta 20 candidatos y se combinan con *reciprocal rank fusion*, que premia a los fragmentos bien ubicados en las dos listas. Quedan los 5 mejores.
 3. **Respuesta.** El LLM recibe los fragmentos numerados y la instrucción de responder solo con esa información, citando cada dato. El backend envía primero las fuentes y después los tokens por Server-Sent Events.
 
 ## Decisiones técnicas
@@ -46,6 +52,7 @@ flowchart LR
 | **Groq con `openai/gpt-oss-20b`** | Responde muy rápido (cientos de tokens por segundo) y tiene un plan gratis que alcanza para una demo. |
 | **Embeddings locales** en lugar de una API | Sin costo por documento ni otra API key. Además, el documento completo no sale del servidor: al LLM solo llegan los 5 fragmentos de cada pregunta. |
 | **ChromaDB** | Persistente en disco, con filtros por metadatos (sesión y documento) y sin un servicio aparte. |
+| **Búsqueda híbrida con BM25 propio** | Los embeddings encuentran ideas parecidas, pero confunden "artículo 14" con "artículo 14 bis" o no encuentran una cifra puntual; BM25 los resuelve por coincidencia de palabras. Está implementado en unas 40 líneas, sin dependencias nuevas: el índice de cada sesión se arma con los textos que ya guarda ChromaDB, se cachea en memoria y se invalida al subir o borrar documentos. La fusión usa solo las posiciones (RRF) porque los puntajes de las dos búsquedas no son comparables. Con `RETRIEVAL_MODE=vector` se vuelve a la búsqueda solo semántica. |
 | **Reescritura de la pregunta** | Sin ella, "¿y dónde nació?" busca literalmente esas palabras y no encuentra nada útil. |
 | **Procesamiento en segundo plano** | Un PDF largo tarda minutos en la CPU del servidor, y los proxies cortan las peticiones largas. La subida responde enseguida (202) y el cliente consulta el avance. Los fragmentos se guardan juntos al final, así una búsqueda nunca ve un documento a medio procesar. |
 | **Historial enviado por el cliente** | El backend no guarda estado de la conversación: cada pregunta trae su historial, recortado a los últimos 6 mensajes. |
@@ -118,10 +125,26 @@ npm run e2e
 - `npm run e2e:ui` corre los tests E2E de interfaz, que no llaman al LLM.
 - `npm run e2e` corre todos los E2E, incluidos los de calidad de respuestas, que sí usan la cuota de Groq.
 
-- **Backend:** ingesta y casos borde de PDFs, chat con un LLM simulado, API de documentos, trabajos en segundo plano, limpieza de sesiones y límite de uso.
+- **Backend:** ingesta y casos borde de PDFs, búsqueda híbrida, chat con un LLM simulado, API de documentos, trabajos en segundo plano, limpieza de sesiones y límite de uso.
 - **E2E:** levantan el backend y el frontend solos. Graban un video de cada test, que se ve con `npm run e2e:report`. Los PDFs de prueba se generan con `backend/scripts/make_test_pdfs.py`.
 
 > En Windows, Vitest y `docker compose build` fallan si la ruta empieza con `c:\` en minúscula: abrí la consola en `C:\...`.
+
+## Evaluación
+
+[`backend/eval/`](backend/eval/README.md) tiene 69 preguntas sobre 6 PDFs reales (la Constitución Argentina, la Declaración Universal de Derechos Humanos, un informe del INDEC, un formulario del IRS y artículos de Wikipedia), cada una con la página correcta, una cita textual y una respuesta de referencia. Incluye referencias exactas, cifras de tablas, preguntas en otro idioma, de seguimiento y sin respuesta en el documento.
+
+- **Búsqueda** (`python -m eval.retrieval`): si el fragmento con la respuesta llega entre las 5 fuentes. Sin LLM, en menos de un minuto.
+- **Respuestas** (`python -m eval.answers`): genera cada respuesta con el flujo real del chat y la corrige `gpt-oss-120b` como juez: si coincide con la referencia, si cada afirmación está respaldada por las fuentes (como la *faithfulness* de RAGAS) y si dice "no sé" cuando corresponde.
+
+Resultado de la búsqueda híbrida, sobre las preguntas con respuesta en el documento:
+
+| | Fragmento correcto entre las 5 fuentes | Respuestas completas | Dice "no sé" teniendo la respuesta |
+|---|---|---|---|
+| Solo semántica | 86% | 79% | 9% |
+| Híbrida | **93%** | **88%** | **2%** |
+
+En las 9 preguntas sin respuesta en el documento, dice que no la encontró en todos los casos. El detalle, pregunta por pregunta, está en [`backend/eval/README.md`](backend/eval/README.md).
 
 ## Deploy
 
@@ -153,7 +176,8 @@ cd /opt/dynamic-rag && sudo git pull && sudo systemctl restart dynamic-rag
 
 ## Limitaciones conocidas
 
-- **Referencias exactas.** La búsqueda es solo semántica, así que preguntas como "¿qué dice el artículo 14?" pueden fallar. Una búsqueda híbrida (BM25 + vectores) lo resolvería.
+- **Preguntas que no comparten palabras con el texto.** Si la pregunta usa sinónimos ("¿con quién se casó?" cuando el texto dice "esposa") o está en otro idioma que el documento, BM25 no ayuda y la búsqueda semántica a veces tampoco alcanza. Un reranker (un modelo que lee la pregunta y cada fragmento juntos) lo mejoraría, y daría además un puntaje confiable para decir "no sé" sin depender solo del prompt.
+- **Fragmentos sin contexto.** Un fragmento que empieza en "18. Proveer lo conducente…" no dice que es el inciso 18 del artículo 75, y el modelo puede tomarlo por el artículo 18. Agregarle a cada fragmento el título de su sección lo resolvería.
 - **Ideas cortadas entre fragmentos.** Si un párrafo largo queda dividido, la respuesta puede salir incompleta. Recuperar también los fragmentos vecinos ayudaría.
 - **Preguntas globales.** "¿De qué trata el documento?" se responde con los 5 fragmentos más parecidos, no con el documento entero. Un resumen generado al subir el PDF lo mejoraría.
 - **Texto ilegible.** Algunos PDFs con fuentes sin mapeo a Unicode extraen caracteres basura y se aceptan igual. Habría que detectarlo y avisar.
@@ -165,8 +189,9 @@ cd /opt/dynamic-rag && sudo git pull && sudo systemctl restart dynamic-rag
 backend/
   app/
     api/          endpoints (documentos, chat) y dependencias (sesión, límite de uso)
-    services/     pdf_parser, chunker, embeddings, vector_store, rag, llm, jobs, sessions
+    services/     pdf_parser, chunker, embeddings, vector_store, keyword_index, rag, llm, jobs, sessions
   tests/
+  eval/           dataset de evaluación, PDFs y scripts que miden la búsqueda y las respuestas
   scripts/        generador de PDFs de prueba
 frontend/
   src/

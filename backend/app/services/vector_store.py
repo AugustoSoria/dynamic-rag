@@ -5,6 +5,7 @@ import chromadb
 from chromadb.api.models.Collection import Collection
 
 from app.config import get_settings
+from app.services import keyword_index
 from app.services.chunker import Chunk
 
 COLLECTION_NAME = "chunks"
@@ -12,6 +13,7 @@ COLLECTION_NAME = "chunks"
 
 @dataclass
 class RetrievedChunk:
+    id: str
     doc_id: str
     filename: str
     page: int
@@ -30,6 +32,8 @@ def _collection() -> Collection:
     )
 
 
+# Toda escritura invalida el índice de palabras clave de la sesión (se arma a partir de estos fragmentos).
+
 def add_chunks(
     session_id: str, doc_id: str, filename: str, chunks: list[Chunk], embeddings: list[list[float]]
 ) -> None:
@@ -41,7 +45,20 @@ def add_chunks(
             {"session_id": session_id, "doc_id": doc_id, "filename": filename, "page": c.page} for c in chunks
         ],
     )
+    keyword_index.invalidate(session_id)
 
+
+def delete_document(session_id: str, doc_id: str) -> None:
+    _collection().delete(where=_where(session_id, [doc_id]))
+    keyword_index.invalidate(session_id)
+
+
+def delete_session(session_id: str) -> None:
+    _collection().delete(where={"session_id": session_id})
+    keyword_index.invalidate(session_id)
+
+
+# --- Lectura -----------------------------------------------------------------
 
 def _where(session_id: str, doc_ids: list[str] | None) -> dict:
     if not doc_ids:
@@ -61,19 +78,48 @@ def search(
     )
     return [
         RetrievedChunk(
+            id=chunk_id,
             doc_id=meta["doc_id"],
             filename=meta["filename"],
             page=meta["page"],
             text=text,
             score=round(1 - dist, 4),
         )
-        for text, meta, dist in zip(result["documents"][0], result["metadatas"][0], result["distances"][0])
+        for chunk_id, text, meta, dist in zip(
+            result["ids"][0], result["documents"][0], result["metadatas"][0], result["distances"][0]
+        )
     ]
 
 
-def delete_document(session_id: str, doc_id: str) -> None:
-    _collection().delete(where=_where(session_id, [doc_id]))
+def session_chunks(session_id: str) -> list[keyword_index.IndexedChunk]:
+    """Todos los fragmentos de la sesión (para armar el índice de palabras clave)."""
+    result = _collection().get(where={"session_id": session_id}, include=["documents", "metadatas"])
+    return [
+        keyword_index.IndexedChunk(id=chunk_id, doc_id=meta["doc_id"], text=text)
+        for chunk_id, text, meta in zip(result["ids"], result["documents"], result["metadatas"])
+    ]
 
 
-def delete_session(session_id: str) -> None:
-    _collection().delete(where={"session_id": session_id})
+def get_chunks(ids: list[str], query_embedding: list[float]) -> list[RetrievedChunk]:
+    """
+    Trae fragmentos por id, con su similitud con la pregunta. Sirve para los que encontró solo la búsqueda
+    por palabras clave: así todas las fuentes muestran el mismo tipo de puntaje. Los ids que ya no existen
+    (un documento borrado entre una búsqueda y otra) se omiten.
+    """
+    if not ids:
+        return []
+    result = _collection().get(ids=ids, include=["documents", "metadatas", "embeddings"])
+    return [
+        RetrievedChunk(
+            id=chunk_id,
+            doc_id=meta["doc_id"],
+            filename=meta["filename"],
+            page=meta["page"],
+            text=text,
+            # Los embeddings están normalizados: el producto escalar es la similitud coseno.
+            score=round(float(sum(a * b for a, b in zip(embedding, query_embedding))), 4),
+        )
+        for chunk_id, text, meta, embedding in zip(
+            result["ids"], result["documents"], result["metadatas"], result["embeddings"]
+        )
+    ]

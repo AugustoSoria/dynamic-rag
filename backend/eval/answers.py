@@ -103,7 +103,8 @@ JUDGE_SCHEMA = {
 }
 
 CORRECTNESS_SCORE = {"completa": 1.0, "parcial": 0.5, "incorrecta": 0.0}
-_CITATION_RE = re.compile(r"\[(\d+)\]")
+# Mismos formatos que convierte el frontend (frontend/src/lib/citations.ts): [1], 【1】 y 【1†L3-L5】.
+_CITATION_RE = re.compile(r"[\[【](\d+)(?:†[^\]】]*)?[\]】]")
 NO_ANSWER_REFERENCE = "(El documento NO contiene esta información: lo correcto es decir que no se encontró.)"
 
 
@@ -288,6 +289,7 @@ def main() -> int:
         "chunk_size": settings.chunk_size,
         "chunk_overlap": settings.chunk_overlap,
         "top_k": settings.top_k,
+        "retrieval_mode": settings.retrieval_mode,
     }
 
     def save() -> None:
